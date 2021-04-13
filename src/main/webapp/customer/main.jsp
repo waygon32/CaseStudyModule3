@@ -20,7 +20,7 @@
     <p>${message1}</p>
 </div>
 <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
-<button onclick="window.location.href='/customer?action=signUpForm'">Đăng ký</button>
+<%--<button onclick="window.location.href='/customer?action=signUpForm'">Đăng ký</button>--%>
 <button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
 </body>
 </html>

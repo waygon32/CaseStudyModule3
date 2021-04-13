@@ -86,6 +86,11 @@ public class CustomerServlet extends HttpServlet {
         boolean check = customerService.checkAccount(account);
         if (check) {
             customerService.addCustomer(account, password, name, address, phoneNumber);
+            HttpSession session = request.getSession();
+            Customer customer = customerService.checkLogin(account, password);
+            session.setAttribute("account", customer);
+            String message = customer.getAccount();
+            request.setAttribute("message1", message);
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
             try {
                 dispatcher.forward(request, response);
@@ -113,7 +118,7 @@ public class CustomerServlet extends HttpServlet {
         Customer customer = customerService.checkLogin(account, password);
         if (customer != null) {
             HttpSession session = request.getSession();
-//            session.setAttribute("account", customer);
+            session.setAttribute("account", customer);
 //            request.setAttribute("account",customer);
             String message = customer.getAccount();
             request.setAttribute("message1", message);

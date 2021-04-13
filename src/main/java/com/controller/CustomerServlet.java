@@ -37,8 +37,9 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-            session.invalidate();
+        HttpSession session = request.getSession(false);
+        Customer customer = (Customer)session.getAttribute("account");
+//            session.invalidate();
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
             dispatcher.forward(request, response);
     }
@@ -119,7 +120,6 @@ public class CustomerServlet extends HttpServlet {
         if (customer != null) {
             HttpSession session = request.getSession();
             session.setAttribute("account", customer);
-//            request.setAttribute("account",customer);
             String message = customer.getAccount();
             request.setAttribute("message1", message);
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");

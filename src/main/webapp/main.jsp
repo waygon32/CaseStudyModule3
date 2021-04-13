@@ -54,6 +54,8 @@
     </style>
 </head>
 <body>
+<button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
+<button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
 <header>
     <div class="container-fluid">
         <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px">
@@ -64,7 +66,7 @@
         </form>
     </div>
     <nav class="container-fluid" style="background:#ff743c; margin: auto; ">
-        <ul class="" style="margin: auto">
+        <ul class="" style="margin: auto">a
             <div class="row">
                 <li class="nav-item col-sm-4 col-lg-2">
                     <a class="nav-link active" aria-current="page" style="color: white" href="/iphone11">Iphone 12</a>

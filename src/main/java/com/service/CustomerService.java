@@ -21,6 +21,7 @@ public class CustomerService {
                 customer = new Customer();
                 customer.setName(resultSet.getString("name"));
                 customer.setAccount(account);
+                customer.setPassword(password);
                 customer.setAddress(resultSet.getString("address"));
                 customer.setPhoneNumber(resultSet.getString("phoneNumber"));
             }

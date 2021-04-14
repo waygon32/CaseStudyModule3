@@ -1,9 +1,24 @@
 package Model;
 
+import java.util.List;
+
 public class Cart {
     private int productId;
-    private String  account ;
+    private String account;
     private int quantity;
+    private List<Product> listProductInCart;
+
+    public List<Product> getListProductInCart() {
+        return listProductInCart;
+    }
+
+    public void setListProductInCart(List<Product> listProductInCart) {
+        this.listProductInCart = listProductInCart;
+    }
+
+    public void addProductInListCart(Product product) {
+        listProductInCart.add(product);
+    }
 
     public int getProductId() {
         return productId;

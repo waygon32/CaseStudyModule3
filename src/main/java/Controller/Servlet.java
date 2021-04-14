@@ -1,8 +1,10 @@
 package Controller;
 
+import Model.Cart;
 import Model.Product;
 import Service.CartService;
-import Service.ProductIpm;
+
+import Service.ProductService;
 import sun.util.resources.cldr.ff.CalendarData_ff_SN;
 
 import javax.servlet.*;
@@ -15,11 +17,10 @@ import java.util.List;
 
 @WebServlet(name = "Servlet", value = "/product")
 public class Servlet extends HttpServlet {
-    static ProductIpm productData = new ProductIpm();
+    static ProductService productData = new ProductService();
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -70,6 +71,7 @@ public class Servlet extends HttpServlet {
     private void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         listProductCart = cartService.getListProductCart(id);
+//        Cart.setListProductInCart(listProductCart);
         menuForm(request, response);
     }
 
@@ -153,6 +155,9 @@ public class Servlet extends HttpServlet {
     private void buyNow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Customer/buyStatus.jsp");
         requestDispatcher.forward(request, response);
+//        for(Product product : listProductCart){
+//            listProductCart.remove(product);
+//        }
     }
 
     private void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

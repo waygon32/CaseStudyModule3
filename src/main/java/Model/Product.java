@@ -65,12 +65,13 @@ public class Product {
         this.productId = id;
     }
 
-    public Product(String name, String color, int memory, int quantity, String price) {
+    public Product(int id, String name, String color, int memory, int quantity, String price) {
         this.color = color;
         this.memory = memory;
         this.price = price;
         this.quantity = quantity;
         this.name = name;
+        this.productId = id;
     }
 
     public String getImg() {

@@ -1,14 +1,18 @@
-Model/Cart.java
- Model.Cart
-Service/DataBaseConnection.java
- Service.DataBaseConnection
-Model/Product.java
- Model.Product
-Service/IProduct.java
- Service.IProduct
-Service/ProductIpm.java
- Service.ProductIpm
-Service/CartService.java
- Service.CartService
 Controller/Servlet.java
  Controller.Servlet
+Service/DataBaseConnection.java
+ Service.DataBaseConnection
+Service/CartService.java
+ Service.CartService
+Service/IProduct.java
+ Service.IProduct
+Model/Product.java
+ Model.Product
+Model/Cart.java
+ Model.Cart
+Service/ProductService.java
+ Service.ProductService
+Model/Order.java
+ Model.Order
+Model/Customer.java
+ Model.Customer

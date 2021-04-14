@@ -52,7 +52,6 @@
 <header>
     <div class="container-fluid">
         <div class="d-flex col-sm-2" style="float: right">
-            ${message1}
             <c:if test="${sessionScope.acc ==null}">
                 <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
             </c:if>

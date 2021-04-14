@@ -1,9 +1,12 @@
 package com.service;
 
 
+import com.controller.Servlet;
 import com.model.Cart;
+import com.model.Customer;
 import com.model.Product;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,12 +17,12 @@ import java.util.List;
 public class CartService {
     private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?";
     private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
-    private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartDetail WHERE account=?";
-    private static String UPDATE_CART_BY_ACCOUNT = "UPDATE cart SET quantity=? WHERE productId=?";
+    private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
+    private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? WHERE productId=?";
     static List<Product> listProduct = new ArrayList<>();
     Connection connection = DataBaseConnection.getConnection();
 
-    public List<Product> getListProductCart(Integer id) {
+    public void getListProductCart(Integer id,String account) {
         boolean isExist = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);
@@ -44,22 +47,21 @@ public class CartService {
                 if (isExist) {
                     Product product = new Product(id, name, color, memory, 1, price);
                     listProduct.add(product);
-                    addCartInDataBase(new Product(id, name, color, memory, 1, price), "thanh");
+                    addCartInDataBase(new Product(id, name, color, memory, 1, price), account);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return listProduct;
+//        return listProduct;
     }
 
     private void updateCartInDataBase(int productId, int newQuantity) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CART_BY_ACCOUNT);
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CART_BY_ID);
         preparedStatement.setInt(1, newQuantity);
         preparedStatement.setInt(2, productId);
         preparedStatement.executeUpdate();
-
     }
 
     public static List<Product> getListProduct() {
@@ -76,8 +78,7 @@ public class CartService {
 
     }
 
-    public void getCartInDataBaseByAccount(String account) throws SQLException {
-        Cart cart = new Cart();
+    public List<Product> getCartInDataBaseByAccount(String account) throws SQLException {
         List<Product> productList = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_LIST_CART);
         preparedStatement.setString(1, account);
@@ -87,11 +88,11 @@ public class CartService {
             String name = resultSet.getString("typename");
             String color = resultSet.getString("color");
             int memory = resultSet.getInt("memory");
+            int quantity = resultSet.getInt("quantity");
             String price = resultSet.getString("price");
-            Product product = new Product(id, name, color, memory, 1, price);
+            Product product = new Product(id, name, color, memory, quantity, price);
             productList.add(product);
         }
-        cart.setListProductInCart(productList);
-        cart.setAccount(account);
+        return productList;
     }
 }

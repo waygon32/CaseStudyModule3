@@ -57,6 +57,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void showLoginForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/loginForm.jsp");
         dispatcher.forward(request, response);
     }
@@ -135,7 +136,7 @@ public class CustomerServlet extends HttpServlet {
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("acc", customer);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("Product/list.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Admin/MainManager.jsp");
                 dispatcher.forward(request, response);
             }
         } else {

@@ -35,7 +35,6 @@
         <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
         <hr>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/customer?action=signUpForm'" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>
-        <button onclick="window.location.href='/customer?action=loginForm'">back</button>
     </form>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

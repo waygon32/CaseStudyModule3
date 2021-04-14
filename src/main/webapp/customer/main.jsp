@@ -57,7 +57,7 @@
                 <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
             </c:if>
             <c:if test="${sessionScope.acc !=null}">
-                <a>Hello ${sessionScope.acc.account}</a>
+                <a>Hello ${sessionScope.acc.account  }</a>
                 <button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
             </c:if>
         </div>

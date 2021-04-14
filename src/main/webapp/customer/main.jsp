@@ -52,12 +52,11 @@
 <header>
     <div class="container-fluid">
         <div class="d-flex col-sm-2" style="float: right">
-            ${message1}
             <c:if test="${sessionScope.acc ==null}">
                 <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
             </c:if>
             <c:if test="${sessionScope.acc !=null}">
-                <a>Hello ${sessionScope.acc.account}</a>
+                <a>Hello ${sessionScope.acc.account  }</a>
                 <button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
             </c:if>
         </div>

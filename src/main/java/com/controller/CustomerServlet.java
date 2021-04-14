@@ -118,25 +118,26 @@ public class CustomerServlet extends HttpServlet {
         Customer customer = customerService.checkLogin(account, password);
         if (customer != null) {
             if (!customer.getAccount().equals("admin")) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("acc", customer);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-                    dispatcher.forward(request, response);
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", customer);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+                dispatcher.forward(request, response);
 //            response.sendRedirect("customer/main.jsp");
-                }else{
-                    HttpSession session = request.getSession();
-                    session.setAttribute("acc", customer);
-                    response.sendRedirect("Product/list.jsp");
-                }
-            } else {
-
-                String message = "Nh&#7853;p sai r&#7891;i";
-                request.setAttribute("message", message);
-//            response.sendRedirect("customer/loginForm.jsp");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/loginForm.jsp");
+            }else {
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", customer);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Product/list.jsp");
                 dispatcher.forward(request, response);
             }
+        } else {
 
-
+            String message = "Nh&#7853;p sai r&#7891;i";
+            request.setAttribute("message", message);
+//            response.sendRedirect("customer/loginForm.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/loginForm.jsp");
+            dispatcher.forward(request, response);
         }
+
+
     }
+}

@@ -1,30 +1,6 @@
-<%--&lt;%&ndash;--%>
-<%--  Created by IntelliJ IDEA.--%>
-<%--  User: Thien--%>
-<%--  Date: 4/9/2021--%>
-<%--  Time: 11:02 AM--%>
-<%--  To change this template use File | Settings | File Templates.--%>
-<%--&ndash;%&gt;--%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Title</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<form action="/customer?action=signUpForm" method="post" class="box">--%>
-<%--    <h1>Sign Up</h1>--%>
-<%--    <input type="text" name="account" placeholder="Username" required>--%>
-<%--    <input type="password" name="password" placeholder="Password" id="password" required>--%>
-<%--    <input type="password" name="rePassword" placeholder="RePassword" id="repassword" required>--%>
-<%--    <input type="text" name="name" placeholder="Họ và tên" required>--%>
-<%--    <input type="text" name="address" placeholder="Địa chỉ" required>--%>
-<%--    <input type="number" name="phoneNumber" placeholder="Số điện thoại" required>--%>
-<%--    <input type="submit" value="Tạo tài khoản">--%>
-<%--    <input type="button" value="quay về trang chủ" onclick="window.location.href='/customer/main.jsp'">--%>
-<%--</form>--%>
-<%--</body>--%>
-<%--</html>--%>
+?
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

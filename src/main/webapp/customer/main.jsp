@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,8 +53,13 @@
     <div class="container-fluid">
         <div class="d-flex col-sm-2" style="float: right">
             ${message1}
-            <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
-            <button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
+            <c:if test="${sessionScope.acc ==null}">
+                <button onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</button>
+            </c:if>
+            <c:if test="${sessionScope.acc !=null}">
+                <a>Hello ${sessionScope.acc.account}</a>
+                <button onclick="window.location.href='/customer?action=logOut'">Đăng xuất</button>
+            </c:if>
         </div>
         <form class="d-flex col-sm-2" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -458,16 +464,16 @@
                             <p><a target='' href='https://onewaymobile.vn/chinh-sach-mua-hang-c2.html'>
                                 Chính sách mua hàng </a>
                             </p></li>
-                        <li class='  level0 menu-item '>
+                        <li class=' level0 menu-item '>
                             <p><a target='' href='https://onewaymobile.vn/chinh-sach-bao-hanh-c3.html'>
                                 Chính sách bảo hành </a>
                             </p></li>
-                        <li class='  level0 menu-item '>
+                        <li class=' level0 menu-item '>
                             <p><a target=''
                                   href='https://onewaymobile.vn/chinh-sach-van-chuyen-c4.html'>
                                 Chính sách vận chuyển </a>
                             </p></li>
-                        <li class='  level0 menu-item '>
+                        <li class=' level0 menu-item '>
                             <p><a target=''
                                   href='https://onewaymobile.vn/phuong-thuc-thanh-toan-c6.html'>
                                 Phương thức thanh toán </a></p>

@@ -16,7 +16,12 @@ public class ProductService implements IProduct {
     public static final String UPDATE_PRODUCT = "UPDATE productdetail SET typeID=? ,color=?,memory=?,price=?,quantity=?,describeProduct=?,img=? WHERE productID=?";
     public static final String LIST_PRODUCT_FOR_CUSTOMER = "select  typeName, color,memory,describeProduct , price,productID from producttype  inner join productdetail on productdetail.typeId=  producttype.typeId order by  typename asc";
 
+<<<<<<< HEAD
    Connection connection = DataBaseConnection.getConnection();
+=======
+    //   Connection connection = DataBaseConnection.databaseConnection();
+    Connection connection = DatabaseConnection.getConnection();
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
 
     @Override
     public List<Product> getAllList() {
@@ -76,7 +81,11 @@ public class ProductService implements IProduct {
     @Override
 
     public boolean updateProduct(Product product) throws SQLException {
+<<<<<<< HEAD
         PreparedStatement preparedStatement =connection.prepareStatement(UPDATE_PRODUCT);
+=======
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT);
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
         preparedStatement.setString(1, product.getTypeId());
         preparedStatement.setString(2, product.getColor());
         preparedStatement.setInt(3, product.getMemory());
@@ -115,13 +124,24 @@ public class ProductService implements IProduct {
                 String describe = resultSet.getString("describeProduct");
                 String price = resultSet.getString("price");
                 int id = resultSet.getInt("productId");
+<<<<<<< HEAD
                 productList.add(new Product(id,productName,color,memory,describe,price));
+=======
+                productList.add(new Product(id, productName, color, memory, describe, price));
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
             }
             return productList;
         } catch (SQLException e) {
             e.printStackTrace();
+<<<<<<< HEAD
         }   return productList;
     }
+=======
+        }
+        return productList;
+    }
+
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
     public Product isProductExist(String typeID, String color, int memory) {
         List<Product> productList = getAllList();
         Product product= null;
@@ -132,4 +152,8 @@ public class ProductService implements IProduct {
         }
         return product;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
 }

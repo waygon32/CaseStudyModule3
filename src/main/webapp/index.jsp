@@ -1,10 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Thien
-  Date: 4/8/2021
-  Time: 1:36 PM
+  User: Dell
+  Date: 4/9/2021
+  Time: 10:19 AM
   To change this template use File | Settings | File Templates.
 --%>
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -214,4 +215,14 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 </body>
+=======
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+  <head>
+    <title>$Title$</title>
+  </head>
+  <body>
+  $END$
+  </body>
+>>>>>>> 83bad89670613fb964e72541ae413007296a168d
 </html>

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class CustomerService {
     public Customer checkLogin(String account, String password) {
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DataBaseConnection.getConnection();
         String userInput = " SELECT * FROM customer WHERE account = ? and password = ? ";
         Customer customer = null;
         try {
@@ -21,6 +21,7 @@ public class CustomerService {
                 customer = new Customer();
                 customer.setName(resultSet.getString("name"));
                 customer.setAccount(account);
+                customer.setPassword(password);
                 customer.setAddress(resultSet.getString("address"));
                 customer.setPhoneNumber(resultSet.getString("phoneNumber"));
             }
@@ -33,7 +34,7 @@ public class CustomerService {
 
     public boolean checkAccount(String account) {
         boolean check = true;
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DataBaseConnection.getConnection();
         String userInput = " SELECT * FROM customer WHERE account = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userInput);
@@ -48,7 +49,7 @@ public class CustomerService {
         return check;
     }
     public void addCustomer (String account , String password, String name, String address, String phoneNumber){
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DataBaseConnection.getConnection();
         String userInput = "INSERT INTO customer (account, password, name, address, phoneNumber) values(?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userInput);

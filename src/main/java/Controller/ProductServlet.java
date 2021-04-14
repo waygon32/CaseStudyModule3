@@ -8,7 +8,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "Servlet", value = "/product")
+@WebServlet(name = "ProductServlet", value = "/products")
 public class ProductServlet extends HttpServlet {
     static ProductImp productImp = new ProductImp();
     static Product product= new Product();

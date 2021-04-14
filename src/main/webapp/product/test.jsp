@@ -58,12 +58,24 @@
 <body>
 <header>
     <div class="container-fluid">
-        <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit"
-                    style=" background: aliceblue;margin-right: 10px; color: black">Search
-            </button>
-        </form>
+        <div class="row">
+
+            <div class="col-lg-8 col-12">
+                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"
+                            style=" background: aliceblue;margin-right: 10px; color: black">Search
+                    </button>
+                </form>
+            </div>
+            <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+                <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px" onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</a>
+            </div>
+            <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+                <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px" onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>
+            </div>
+        </div>
+
     </div>
     <nav class="container-fluid" style="background:#ff743c; margin: auto; ">
         <ul class="" style="margin: auto">
@@ -140,8 +152,10 @@
                             </div>
                             <div style="margin: auto">
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
-                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out><a href="/iphone8"><img height="50px" width="50px" src="https://previews.123rf.com/images/asmati/asmati1610/asmati161000086/63402708-shopping-cart-sign-white-icon-on-red-circle-.jpg"></a>
-                            </h3>
+                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out><a
+                                            href="/iphone8"><img height="50px" width="50px"
+                                                                 src="https://previews.123rf.com/images/asmati/asmati1610/asmati161000086/63402708-shopping-cart-sign-white-icon-on-red-circle-.jpg"></a>
+                                    </h3>
                                 </div>
                             </div>
                         </div>

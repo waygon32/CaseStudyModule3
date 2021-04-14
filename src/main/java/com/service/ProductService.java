@@ -16,7 +16,7 @@ public class ProductService implements IProduct {
     public static final String UPDATE_PRODUCT = "UPDATE productdetail SET typeID=? ,color=?,memory=?,price=?,quantity=?,describeProduct=?,img=? WHERE productID=?";
     public static final String LIST_PRODUCT_FOR_CUSTOMER = "select  typeName, color,memory,describeProduct , price,productID from producttype  inner join productdetail on productdetail.typeId=  producttype.typeId order by  typename asc";
 
-   Connection connection = DataBaseConnection.databaseConnection();
+   Connection connection = DataBaseConnection.getConnection();
 
     @Override
     public List<Product> getAllList() {

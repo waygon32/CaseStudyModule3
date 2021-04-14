@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                 <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                   onclick="window.location.href='/customer?action=main'" method="post">Trang chủ</a>
+                   onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
             </div>
             <div class="col-lg-6 col-12">
                 <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
@@ -158,6 +158,7 @@
                         </div>
                         <div>
                             <div style="text-align: center">
+<%--                                <h3><c:out value="${product.productId}"></c:out></h3>--%>
                                 <h3><c:out value="${product.name}"></c:out> <c:out
                                         value="${product.color}"></c:out></h3>
                                 <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out></h5>
@@ -166,7 +167,7 @@
                             <div style="margin: auto">
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
                                     <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out><a
-                                            href="/iphone8"><img height="50px" width="50px"
+                                            action="product?action=addToCart"><img height="50px" width="50px"
                                                                  src="https://previews.123rf.com/images/asmati/asmati1610/asmati161000086/63402708-shopping-cart-sign-white-icon-on-red-circle-.jpg"></a>
                                     </h3>
                                 </div>

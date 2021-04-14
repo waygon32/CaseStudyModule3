@@ -32,7 +32,7 @@ public class CustomerServlet extends HttpServlet {
                 logOut(request, response);
                 break;
             }
-            case "main": {
+            case "showMain": {
                 showMain(request, response);
                 break;
             }
@@ -46,6 +46,7 @@ public class CustomerServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.removeAttribute("acc");
+        session.invalidate();
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
         dispatcher.forward(request, response);
     }

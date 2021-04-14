@@ -3,6 +3,7 @@ package com.controller;
 
 import com.model.Product;
 import com.service.CartService;
+import com.service.ProductImp;
 import com.service.ProductService;
 
 import javax.servlet.*;
@@ -19,6 +20,7 @@ public class Servlet extends HttpServlet {
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
+    static ProductImp productImp = new ProductImp();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -93,9 +95,9 @@ public class Servlet extends HttpServlet {
 
 
     private void menuForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("products", productData.getListProductForCustomer());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/menu.jsp");
-        requestDispatcher.forward(request, response);
+        request.setAttribute("productsList", productImp.getListProductForClien());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

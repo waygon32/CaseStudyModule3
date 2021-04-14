@@ -17,7 +17,7 @@ public class CartService {
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartDetail WHERE account=?";
     private static String UPDATE_CART_BY_ACCOUNT = "UPDATE cart SET quantity=? WHERE productId=?";
     static List<Product> listProduct = new ArrayList<>();
-    Connection connection = DataBaseConnection.databaseConnection();
+    Connection connection = DataBaseConnection.getConnection();
 
     public List<Product> getListProductCart(Integer id) {
         boolean isExist = true;

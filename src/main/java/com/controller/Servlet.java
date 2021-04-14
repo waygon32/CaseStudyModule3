@@ -53,7 +53,7 @@ public class Servlet extends HttpServlet {
     }
 
     private void deleteInCart(HttpServletRequest request, HttpServletResponse response) {
-//        String name  = request.getParameter("name");
+//        String name  = request.getParameter("id");
 //        for(Product product : listProductCart ){
 //            if(name.equals(product.getColor())){
 //                listProductCart.remove(product);

@@ -183,11 +183,6 @@ public class Servlet extends HttpServlet {
         }
 
     }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 83bad89670613fb964e72541ae413007296a168d
     private void doCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String typeID = request.getParameter("typeId");
         String color = request.getParameter("color");

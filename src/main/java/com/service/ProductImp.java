@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.service.DataBaseConnection.getConnection;
-
 public class ProductImp implements IProduct {
     public static final String GET_ALL_PRODUCT = "SELECT * FROM productdetail";
     public static final String ADD_PRODUCT = "INSERT INTO productdetail(typeID,color,memory,price,quantity,describeProduct,img) VALUES(?,?,?,?,?,?,?)";

@@ -16,7 +16,7 @@ public class CartService {
     private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartDetail WHERE account=?";
     static List<Product> listProduct = new ArrayList<>();
-    Connection connection = DataBaseConnection.databaseConnection();
+    Connection connection = DatabaseConnection.getConnection();
 
     public List<Product> getListProductCart(Integer id) {
         boolean isExist = true;

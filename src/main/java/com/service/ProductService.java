@@ -16,7 +16,8 @@ public class ProductService implements IProduct {
     public static final String UPDATE_PRODUCT = "UPDATE productdetail SET typeID=? ,color=?,memory=?,price=?,quantity=?,describeProduct=?,img=? WHERE productID=?";
     public static final String LIST_PRODUCT_FOR_CUSTOMER = "select  typeName, color,memory,describeProduct , price,productID from producttype  inner join productdetail on productdetail.typeId=  producttype.typeId order by  typename asc";
 
-   Connection connection = DataBaseConnection.databaseConnection();
+    //   Connection connection = DataBaseConnection.databaseConnection();
+    Connection connection = DatabaseConnection.getConnection();
 
     @Override
     public List<Product> getAllList() {
@@ -76,7 +77,7 @@ public class ProductService implements IProduct {
     @Override
 
     public boolean updateProduct(Product product) throws SQLException {
-        PreparedStatement preparedStatement =connection.prepareStatement(UPDATE_PRODUCT);
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT);
         preparedStatement.setString(1, product.getTypeId());
         preparedStatement.setString(2, product.getColor());
         preparedStatement.setInt(3, product.getMemory());
@@ -115,12 +116,24 @@ public class ProductService implements IProduct {
                 String describe = resultSet.getString("describeProduct");
                 String price = resultSet.getString("price");
                 int id = resultSet.getInt("productId");
-                productList.add(new Product(id,productName,color,memory,describe,price));
+                productList.add(new Product(id, productName, color, memory, describe, price));
             }
             return productList;
         } catch (SQLException e) {
             e.printStackTrace();
-        }   return productList;
+        }
+        return productList;
+    }
+
+    public Product isProductExist(String typeID, String color, int memory) {
+        List<Product> productList = getAllList();
+        Product product= null;
+        for (Product p : productList) {
+            if (p.getTypeId().equals(typeID) && p.getColor().equals(color) && p.getMemory() == memory) {
+                product=p;
+            }
+        }
+        return product;
     }
 
 }

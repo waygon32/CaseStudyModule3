@@ -1,4 +1,5 @@
 package com.controller;
+
 import com.model.Customer;
 import com.service.CustomerService;
 
@@ -38,8 +39,8 @@ public class CustomerServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.removeAttribute("acc");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-            dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showSignUpForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,13 +117,18 @@ public class CustomerServlet extends HttpServlet {
         CustomerService customerService = new CustomerService();
         Customer customer = customerService.checkLogin(account, password);
         if (customer != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", customer);
-//            String message = customer.getAccount();
-//            request.setAttribute("message1", message);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-            dispatcher.forward(request, response);
+            if (!customer.getAccount().equals("admin")) {
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", customer);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+                dispatcher.forward(request, response);
 //            response.sendRedirect("customer/main.jsp");
+            }else {
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", customer);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Product/list.jsp");
+                dispatcher.forward(request, response);
+            }
         } else {
 
             String message = "Nh&#7853;p sai r&#7891;i";

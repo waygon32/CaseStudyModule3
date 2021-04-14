@@ -1,7 +1,6 @@
 package com.controller;
 
 
-
 import com.model.Product;
 import com.service.CartService;
 import com.service.ProductService;
@@ -20,6 +19,7 @@ public class Servlet extends HttpServlet {
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -193,11 +193,29 @@ public class Servlet extends HttpServlet {
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String describe = request.getParameter("describe");
         String img = request.getParameter("img");
-        try {
-            productData.createProduct(new Product(typeID, color, memory, price, quantity, describe, img));
-            response.sendRedirect("/product");
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
+        product = productData.isProductExist(typeID, color, memory);
+        if (product == null) {
+            try {
+                productData.createProduct(new Product(typeID, color, memory, price, quantity, describe, img));
+                response.sendRedirect("/product");
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            product.setPrice(price);
+            product.setQuantity(quantity + product.getQuantity());
+            if (describe != null) {
+                product.setDescribeProduct(describe);
+            }
+            if (img != null) {
+                product.setImg(img);
+            }
+            try {
+                productData.updateProduct(product);
+                response.sendRedirect("/product");
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

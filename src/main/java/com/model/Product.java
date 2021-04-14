@@ -1,36 +1,109 @@
 package com.model;
 
 public class Product {
-    private String name;
-    private int memory;
+    private int productId;
+    private String typeId;
     private String color;
-    private float price;
+    private int memory;
+    private String price;
     private int quantity;
     private String describeProduct;
+    private String img;
 
-    public Product(String name, int memory, String color, float price, int quantity, String describeProduct) {
-        this.name = name;
-        this.memory = memory;
+    private String name;
+
+
+    public Product() {
+    }
+
+    public Product(int productId, String typeId, String color, int memory, String price, int quantity, String describeProduct, String img) {
+        this.productId = productId;
+        this.typeId = typeId;
         this.color = color;
+        this.memory = memory;
+        this.price = price;
+        this.quantity = quantity;
+        this.describeProduct = describeProduct;
+        this.img = img;
+    }
+
+    public Product(String typeId, String color, int memory, String price, int quantity, String describeProduct, String img) {
+        this.typeId = typeId;
+        this.color = color;
+        this.memory = memory;
+        this.price = price;
+        this.quantity = quantity;
+        this.describeProduct = describeProduct;
+        this.img = img;
+    }
+
+    public Product(int productId, String typeId, String color, int memory, String price, int quantity, String describeProduct) {
+        this.productId = productId;
+        this.typeId = typeId;
+        this.color = color;
+        this.memory = memory;
         this.price = price;
         this.quantity = quantity;
         this.describeProduct = describeProduct;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getMemory() {
-        return memory;
-    }
-
-    public void setMemory(int memory) {
+    public Product(String typeId, String color, int memory, String price, int quantity, String describeProduct) {
+        this.typeId = typeId;
+        this.color = color;
         this.memory = memory;
+        this.price = price;
+        this.quantity = quantity;
+        this.describeProduct = describeProduct;
+    }
+
+    public Product(int id, String productName, String color, int memory, String describe, String price) {
+        this.name = productName;
+        this.color = color;
+        this.memory = memory;
+        this.describeProduct = describe;
+        this.price = price;
+        this.productId = id;
+    }
+
+    public Product(int id, String name, String color, int memory, int quantity, String price) {
+        this.color = color;
+        this.memory = memory;
+        this.price = price;
+        this.quantity = quantity;
+        this.name = name;
+        this.productId = id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getDescribeProduct() {
+        return describeProduct;
+    }
+
+    public void setDescribeProduct(String describeProduct) {
+        this.describeProduct = describeProduct;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public String getColor() {
@@ -41,11 +114,28 @@ public class Product {
         this.color = color;
     }
 
-    public float getPrice() {
+    public int getMemory() {
+        return memory;
+    }
+
+    public void setMemory(int memory) {
+        this.memory = memory;
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -57,12 +147,4 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public String getDescribeProduct() {
-        return describeProduct;
-    }
-
-    public void setDescribeProduct(String describeProduct) {
-        this.describeProduct = describeProduct;
-    }
 }
-

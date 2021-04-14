@@ -59,10 +59,15 @@
 <header>
     <div class="container-fluid">
         <div class="row">
-
-            <div class="col-lg-8 col-12">
-                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+                <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
+                   onclick="window.location.href='/customer?action=main'" method="post">Trang chủ</a>
+            </div>
+            <div class="col-lg-6 col-12">
+                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
+                      action="product?action=searchMenu" method="post">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           name="search">
                     <button class="btn btn-outline-success" type="submit"
                             style=" background: aliceblue;margin-right: 10px; color: black">Search
                     </button>
@@ -71,11 +76,12 @@
             <c:if test="${sessionScope.acc ==null}">
                 <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                       onclick="window.location.href='/customer?action=loginForm'">Đăng nhập</a>
+                       onclick="window.location.href='/customer?action=loginForm'" method="post">Đăng nhập</a>
                 </div>
             </c:if>
             <c:if test="${sessionScope.acc !=null}">
-                <div class="col-lg-2 col-6 btn" style="margin: auto; text-align: center">Hello ${sessionScope.acc.account  }</div>
+                <div class="col-lg-2 col-6 btn" style="margin: auto; text-align: center">
+                    Hello ${sessionScope.acc.account  }</div>
                 <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
                        onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>

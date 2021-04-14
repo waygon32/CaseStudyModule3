@@ -2,6 +2,7 @@ package com.controller;
 
 import com.model.Customer;
 import com.service.CustomerService;
+import com.service.ProductImp;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -10,6 +11,8 @@ import java.io.IOException;
 
 @WebServlet(name = "CustomerServlet", value = "/customer")
 public class CustomerServlet extends HttpServlet {
+    static ProductImp productImp = new ProductImp();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -27,6 +30,10 @@ public class CustomerServlet extends HttpServlet {
             }
             case "logOut": {
                 logOut(request, response);
+                break;
+            }
+            case "main": {
+                showMain(request, response);
                 break;
             }
             default: {
@@ -54,6 +61,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void showMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("productsList", productImp.getListProductForClien());
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
         dispatcher.forward(request, response);
     }
@@ -123,7 +131,7 @@ public class CustomerServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
                 dispatcher.forward(request, response);
 //            response.sendRedirect("customer/main.jsp");
-            }else {
+            } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("acc", customer);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Product/list.jsp");

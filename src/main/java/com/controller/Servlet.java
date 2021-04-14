@@ -226,9 +226,9 @@ public class Servlet extends HttpServlet {
             }
         }
         if (!listSearched.isEmpty()) {
-            request.setAttribute("products", listSearched);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/menu.jsp");
-            requestDispatcher.forward(request, response);
+            request.setAttribute("productsList", listSearched);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+            dispatcher.forward(request, response);
         } else {
             menuForm(request, response);
         }

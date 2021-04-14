@@ -29,9 +29,9 @@ public class ProductServlet extends HttpServlet {
             case "delete":
                 deleteProduct(request, response);
                 break;
-            case "test":
-                showListProductClient(request,response);
-                break;
+//            case "test":
+//                showListProductClient(request,response);
+//                break;
             default:
                 showListProduct(request, response);
                 break;
@@ -66,12 +66,12 @@ public class ProductServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/listProduct.jsp");
         dispatcher.forward(request, response);
     }
-    private void showListProductClient(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        request.setAttribute("productsList", productImp.getListProductForClien());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/test.jsp");
-        dispatcher.forward(request, response);
-    }
+//    private void showListProductClient(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//
+//        request.setAttribute("productsList", productImp.getListProductForClien());
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("product/test.jsp");
+//        dispatcher.forward(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

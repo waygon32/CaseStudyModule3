@@ -13,6 +13,7 @@
 </head>
 <body>
 <h3 align="center">Product Manager</h3>
+<a href="/Admin/MainManager.jsp">Back</a>
 <table border="1px solid" align="center" style="text-align: center">
     <tr>
         <td>ProductID</td>
@@ -39,8 +40,8 @@
     </c:forEach>
     <tr>
         <td colspan="9"><a href="/product?action=create">Add</a>
-        </td> <td colspan="9"><a href="/product?action=menu">menu</a></td>
     </tr>
+    </td> <td colspan="9"><a href="/product?action=menu">menu</a></td>
 </table>
 </body>
 </html>

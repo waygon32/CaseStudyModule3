@@ -5,7 +5,7 @@ import java.util.List;
 public class Cart {
     private int productId;
     private String account;
-    private int quantity;
+    private String totalPrice;
     private List<Product> listProductInCart;
 
     public List<Product> getListProductInCart() {

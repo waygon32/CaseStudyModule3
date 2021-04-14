@@ -1,8 +1,11 @@
 package com.controller;
 
 
+import com.model.Customer;
+import com.model.Order;
 import com.model.Product;
 import com.service.CartService;
+import com.service.CustomerService;
 import com.service.ProductService;
 
 import javax.servlet.*;
@@ -10,6 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class Servlet extends HttpServlet {
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
+    List<Order> orderList;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,11 +50,21 @@ public class Servlet extends HttpServlet {
             case "deleteInCart":
                 deleteInCart(request, response);
                 break;
+            case "orderManagement":
+                OrderManagement(request, response);
+                break;
             case "delete":
                 deleteProduct(request, response);
             default:
                 showListProduct(request, response);
         }
+    }
+
+    private void OrderManagement(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
+        request.setAttribute("orderList", orderList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/orderManagement.jsp");
+        requestDispatcher.forward(request, response);
+
     }
 
     private void deleteInCart(HttpServletRequest request, HttpServletResponse response) {
@@ -69,13 +84,22 @@ public class Servlet extends HttpServlet {
 
     private void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        listProductCart = cartService.getListProductCart(id);
+        HttpSession session = request.getSession(false);
+        Customer customer = (Customer) session.getAttribute("acc");
+        cartService.getListProductCart(id, customer.getAccount());
 //        Cart.setListProductInCart(listProductCart);
         menuForm(request, response);
     }
 
 
     private void showCartForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Customer customer = (Customer) session.getAttribute("acc");
+        try {
+            listProductCart = cartService.getCartInDataBaseByAccount(customer.getAccount());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (listProductCart != null) {
             request.setAttribute("listCart", listProductCart);
             long total = 0;
@@ -152,6 +176,7 @@ public class Servlet extends HttpServlet {
     }
 
     private void buyNow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/buyStatus.jsp");
         requestDispatcher.forward(request, response);
 //        for(Product product : listProductCart){
@@ -235,5 +260,6 @@ public class Servlet extends HttpServlet {
             menuForm(request, response);
         }
     }
+
 
 }

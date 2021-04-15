@@ -63,4 +63,27 @@ public class CustomerService {
             throwables.printStackTrace();
         }
     }
+    public  Customer getCustomerByAccount(String account) {
+        Connection connection = DataBaseConnection.getConnection();
+        String userInput = " SELECT * FROM customer WHERE account = ?";
+        Customer customer  = new Customer();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(userInput);
+            preparedStatement.setString(1, account);
+//            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               String name = resultSet.getString("name");
+               String address = resultSet.getString("address");
+               String phoneNumber= resultSet.getString("phoneNumber");
+               customer.setName(name);
+               customer.setAccount(account);
+               customer.setAddress(address);
+               customer.setPhoneNumber(phoneNumber);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
 }

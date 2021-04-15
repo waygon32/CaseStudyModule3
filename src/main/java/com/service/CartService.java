@@ -19,10 +19,13 @@ public class CartService {
     private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
     private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? WHERE productId=?";
+    private static String DELETE_PRODUCT_IN_CART = "DELETE FROM cart WHERE productId=?";
+    private static String GET_BEST_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) AS totalSold from vw_orderDetail  group by productID order by totalSold desc limit 3;";
+    private static String GET_BAD_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) as totalSold from vw_orderDetail  group by productID order by totalSold asc limit 3;";
     static List<Product> listProduct = new ArrayList<>();
     Connection connection = DataBaseConnection.getConnection();
 
-    public void getListProductCart(Integer id,String account) {
+    public void getListProductCart(Integer id, String account) {
         boolean isExist = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);
@@ -39,8 +42,7 @@ public class CartService {
                         int newQuantity = product.getQuantity() + 1;
                         product.setQuantity(newQuantity);
                         long newPrice = Long.parseLong(product.getPrice()) + Long.parseLong(price);
-                        String str = "";
-                        product.setPrice(str + newPrice);
+                        product.setPrice( Long.toString(newPrice));
                         updateCartInDataBase(product.getProductId(), newQuantity);
                     }
                 }
@@ -62,6 +64,14 @@ public class CartService {
         preparedStatement.setInt(1, newQuantity);
         preparedStatement.setInt(2, productId);
         preparedStatement.executeUpdate();
+    }
+
+    public void deleteProductInCart(List<Product> listProduct) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_IN_CART);
+        for (Product product : listProduct) {
+            preparedStatement.setInt(1, product.getProductId());
+            preparedStatement.executeUpdate();
+        }
     }
 
     public static List<Product> getListProduct() {
@@ -94,5 +104,36 @@ public class CartService {
             productList.add(product);
         }
         return productList;
+    }
+
+    public List<Product> getBestSeller() throws SQLException {
+        List<Product> list = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_BEST_SELLER);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int productId = resultSet.getInt("productId");
+            String name = resultSet.getString("typeName");
+            String color = resultSet.getString("color");
+            int memory = resultSet.getInt("memory");
+            int quantity = resultSet.getInt("totalSold");
+            list.add(new Product(productId, name, color, memory, quantity));
+        }
+        return list;
+
+    }
+    public List<Product> getBadSeller() throws SQLException {
+        List<Product> list = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_BAD_SELLER);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int productId = resultSet.getInt("productId");
+            String name = resultSet.getString("typeName");
+            String color = resultSet.getString("color");
+            int memory = resultSet.getInt("memory");
+            int quantity = resultSet.getInt("totalSold");
+            list.add(new Product(productId, name, color, memory, quantity));
+        }
+        return list;
+
     }
 }

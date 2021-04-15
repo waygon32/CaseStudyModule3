@@ -31,7 +31,7 @@
     <tr>
         <td>Thống kê </td>
         <td>Thống kê tổng doanh thu, top 5 sản phẩm bán chạy nhất</td>
-        <td><a href="">Go</a></td>
+        <td><a href="/product?action=statistics">Go</a></td>
     </tr>
 </table>
 </body>

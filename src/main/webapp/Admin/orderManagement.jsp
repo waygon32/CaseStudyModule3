@@ -13,22 +13,29 @@
 </head>
 <body>
 <a href="/Admin/MainManager.jsp">Back</a>
-<table>
+<table border="1px solid " align="center">
     <tr>
         <td>Order ID</td>
         <td>Account</td>
+        <td>Total</td>
+        <td></td>
         <td></td>
 
     </tr>
 
-    <c:forEach var="orderList" items="${requestScope['orderList']}">
+    <c:forEach var="order" items="${requestScope['orderList']}">
         <tr>
-            <td><a href=""><c:out value="${orderList.orderId}"></c:out></a></td>
-            <td><a href=""><c:out value="${orderList.account}"></c:out></a></td>
-            <td><a href="/product?action=confirmOrder&orderID='${orderList.orderId}'">Confirm</a></td>
+            <td><a href="/customer?action=orderDetail&account=${order.account}&orderId=${order.orderId}"><c:out
+                    value="${order.orderId}"></c:out></a></td>
+            <td> <a href="/customer?action=customerInformation&account=${order.account} "><c:out
+                    value="${order.account}"></c:out></a></td>
+            <td><c:out value="${order.totalPrices}"></c:out></td>
+            <td><a href="/product?action=confirmOrder&orderID='${order.orderId}'">Confirm</a></td>
+
         </tr>
     </c:forEach>
 
 </table>
+</form>
 </body>
 </html>

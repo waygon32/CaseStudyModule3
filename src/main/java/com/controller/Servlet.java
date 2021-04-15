@@ -6,6 +6,7 @@ import com.model.Order;
 import com.model.Product;
 import com.service.CartService;
 import com.service.CustomerService;
+import com.service.OrderService;
 import com.service.ProductService;
 
 import javax.servlet.*;
@@ -24,6 +25,7 @@ public class Servlet extends HttpServlet {
     static Product product;
     static List<Product> listProductCart;
     List<Order> orderList;
+    static OrderService orderService = new OrderService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,7 +53,10 @@ public class Servlet extends HttpServlet {
                 deleteInCart(request, response);
                 break;
             case "orderManagement":
-                OrderManagement(request, response);
+                orderManagement(request, response);
+                break;
+            case "statistics":
+                statistics(request, response);
                 break;
             case "delete":
                 deleteProduct(request, response);
@@ -60,8 +65,24 @@ public class Servlet extends HttpServlet {
         }
     }
 
-    private void OrderManagement(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
-        request.setAttribute("orderList", orderList);
+    private void statistics(HttpServletRequest request, HttpServletResponse response)  {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/statistics.jsp");
+        try {
+            request.setAttribute("bestSeller",cartService.getBestSeller());
+            request.setAttribute("badSeller",cartService.getBadSeller());
+            requestDispatcher.forward(request,response);
+        } catch (ServletException  | IOException |SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void orderManagement(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            orderList = orderService.getAllListOrderDetail();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("orderList",  orderList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/orderManagement.jsp");
         requestDispatcher.forward(request, response);
 
@@ -176,12 +197,17 @@ public class Servlet extends HttpServlet {
     }
 
     private void buyNow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession(false);
+        Customer customer = (Customer) session.getAttribute("acc");
+        try {
+            orderService.insertOrderDetailView(listProductCart, customer.getAccount());
+            cartService.deleteProductInCart(listProductCart);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/buyStatus.jsp");
         requestDispatcher.forward(request, response);
-//        for(Product product : listProductCart){
-//            listProductCart.remove(product);
-//        }
+
     }
 
     private void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -208,6 +234,7 @@ public class Servlet extends HttpServlet {
         }
 
     }
+
     private void doCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String typeID = request.getParameter("typeId");
         String color = request.getParameter("color");

@@ -1,17 +1,23 @@
 package com.controller;
 
 import com.model.Customer;
+import com.model.Product;
 import com.service.CustomerService;
+import com.service.OrderService;
 import com.service.ProductImp;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "CustomerServlet", value = "/customer")
 public class CustomerServlet extends HttpServlet {
     static ProductImp productImp = new ProductImp();
+    CustomerService customerService =  new CustomerService();
+    OrderService  orderService  = new OrderService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,11 +42,52 @@ public class CustomerServlet extends HttpServlet {
                 showMain(request, response);
                 break;
             }
+            case "customerInformation":
+                showCustomerInfor(request,response);
+                break;
+            case "orderDetail":
+                showOrderDetailByOrderId(request,response);
+                break;
+
             default: {
                 showMain(request, response);
                 break;
             }
         }
+    }
+
+    private void showOrderDetailByOrderId(HttpServletRequest request, HttpServletResponse response) {
+        String account =  request.getParameter("account");
+        int orderId  =  Integer.parseInt(request.getParameter("orderId"));
+        try {
+            List<Product> productList = orderService.getProductListInOrder(account,orderId);
+            request.setAttribute("listOrder",productList);
+            request.setAttribute("orderId",orderId);
+            request.setAttribute("account",account);
+            RequestDispatcher  dispatcher  =  request.getRequestDispatcher("/customer/orderDetail.jsp");
+            try {
+                dispatcher.forward(request,response);
+            } catch (ServletException |IOException  e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void showCustomerInfor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String account = request.getParameter("account");
+
+        List<Product> listOldOrder = null;
+        try {
+            listOldOrder = orderService.getOrderHistory(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("listOldOrder",listOldOrder);
+        request.setAttribute("customer",customerService.getCustomerByAccount(account));
+        RequestDispatcher  requestDispatcher = request.getRequestDispatcher("customer/customerInformation.jsp");
+        requestDispatcher.forward(request,response);
     }
 
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,6 +129,7 @@ public class CustomerServlet extends HttpServlet {
                 signUp(request, response);
                 break;
             }
+
         }
     }
 

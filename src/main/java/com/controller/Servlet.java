@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -53,18 +54,13 @@ public class Servlet extends HttpServlet {
             case "addToCart":
                 addToCart(request, response);
                 break;
-            case "deleteInCart":
-                deleteInCart(request, response);
-                break;
             case "orderManagement":
                 orderManagement(request, response);
                 break;
             case "statistics":
                 statistics(request, response);
                 break;
-            case "delete":
-                deleteProduct(request, response);
-                break;
+
             case "iphone12":
                 showIphoneID1(request, response);
                 break;
@@ -83,6 +79,11 @@ public class Servlet extends HttpServlet {
             case "iphone6":
                 showIphoneID6(request, response);
                 break;
+            case "deleteCart" :
+                deleteInCart(request,response);
+                break;
+            case "delete":
+                deleteProduct(request, response);
             default:
                 showListProduct(request, response);
         }
@@ -112,17 +113,22 @@ public class Servlet extends HttpServlet {
     }
 
     private void deleteInCart(HttpServletRequest request, HttpServletResponse response) {
-//        String name  = request.getParameter("id");
-//        for(Product product : listProductCart ){
-//            if(name.equals(product.getColor())){
-//                listProductCart.remove(product);
-//            }
-//        }
-//        try {
-//            showCartForm(request,response);
-//        } catch (ServletException | IOException e) {
-//            e.printStackTrace();
-//        }
+//      int id  = Integer.getInteger(request.getParameter("productId"));
+      int id = Integer.parseInt(request.getParameter("productId"));
+        HttpSession session = request.getSession(false);
+        Customer customer = (Customer) session.getAttribute("acc");
+        try {
+            cartService.deleteProductInCart(id,customer.getAccount());
+            try {
+                showCartForm(request,response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -248,7 +254,8 @@ public class Servlet extends HttpServlet {
         Customer customer = (Customer) session.getAttribute("acc");
         try {
             orderService.insertOrderDetailView(listProductCart, customer.getAccount());
-            cartService.deleteProductInCart(listProductCart);
+            for(Product  product :  listProductCart){
+            cartService.deleteProductInCart(product.getProductId(),customer.getAccount());}
         } catch (SQLException e) {
             e.printStackTrace();
         }

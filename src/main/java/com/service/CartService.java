@@ -16,17 +16,17 @@ import java.util.List;
 
 public class CartService {
     private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?";
-    private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
+    private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account,cartPrice) values(?,?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
     private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? ,cartPrice=? WHERE productId=?";
-    private static String DELETE_PRODUCT_IN_CART = "DELETE FROM cart WHERE productId=?";
+    private static String DELETE_PRODUCT_IN_CART = "DELETE FROM cart WHERE productId=? and account = ?";
     private static String GET_BEST_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) AS totalSold from vw_orderDetail  group by productID order by totalSold desc limit 3;";
     private static String GET_BAD_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) as totalSold from vw_orderDetail  group by productID order by totalSold asc limit 3;";
     static List<Product> listProduct = new ArrayList<>();
     Connection connection = DataBaseConnection.getConnection();
 
     public void getListProductCart(Integer id, String account) {
-        boolean isExist = true;
+        boolean isExist = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);
             preparedStatement.setInt(1, id);
@@ -38,18 +38,18 @@ public class CartService {
                 String price = resultSet.getString("price");
                 for (Product product : listProduct) {
                     if (product.getName().equals(name) && product.getColor().equals(color) && memory.equals(product.getMemory())) {
-                        isExist = false;
+                        isExist = true;
                         int newQuantity = product.getQuantity() + 1;
-//                        product.setQuantity(newQuantity);
+                        product.setQuantity(newQuantity);
                         long newPrice = Long.parseLong(product.getPrice()) + Long.parseLong(price);
-//                        product.setPrice(Long.toString(newPrice));
+                        product.setPrice(Long.toString(newPrice));
                         updateCartInDataBase(product.getProductId(), newQuantity,Long.toString(newPrice));
                     }
                 }
-                if (isExist) {
+                if (!isExist) {
                     Product product = new Product(id, name, color, memory, 1, price);
                     listProduct.add(product);
-                    addCartInDataBase(new Product(id, name, color, memory, 1, price), account);
+                    addCartInDataBase(product, account);
                 }
             }
         } catch (SQLException e) {
@@ -67,12 +67,12 @@ public class CartService {
         preparedStatement.executeUpdate();
     }
 
-    public void deleteProductInCart(List<Product> listProduct) throws SQLException {
+    public void deleteProductInCart(int id,String account) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_IN_CART);
-        for (Product product : listProduct) {
-            preparedStatement.setInt(1, product.getProductId());
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2,account);
             preparedStatement.executeUpdate();
-        }
+
     }
 
     public static List<Product> getListProduct() {
@@ -85,6 +85,7 @@ public class CartService {
         preparedStatement.setInt(1, product.getProductId());
         preparedStatement.setInt(2, product.getQuantity());
         preparedStatement.setString(3, account);
+        preparedStatement.setString(4,product.getPrice());
         preparedStatement.executeUpdate();
 
     }

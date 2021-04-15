@@ -157,7 +157,8 @@
                         <div style="margin: auto">
                             <div class="font-weight-bold blue-text" style="text-align: center; color: red">
                                 <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
-                                <a href="/product?action=deleteInCart&name=${product.color}">Delete</a>
+<%--                                <a href="/product?action=deleteInCart&id1=${product.productId}">Delete</a>--%>
+                                <a href="/product?action=deleteCart&productId=${product.productId}">Remove</a>
                             </div>
                         </div>
                     </div>

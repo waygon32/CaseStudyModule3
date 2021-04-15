@@ -13,11 +13,12 @@ import java.util.List;
 
 public class OrderService {
     private static String SELECT_FROM_ORDER_DETAIL_VIEW_BY_ACCOUNT = "SELECT * FROM vw_orderdetail WHERE account =? and orderID=?";
-    private static String SELECT_FROM_ORDER_HISTORY = "SELECT * FROM vw_orderdetail WHERE account =? and  status='Done' ";
+    private static String SELECT_FROM_ORDER_HISTORY = "SELECT * FROM vw_orderdetail WHERE account =? and  status='done' ";
     private static String SELECT_FROM_ORDER_DETAIL_VIEW = "SELECT orderID, account , sum(prices) AS total , status,orderDate FROM vw_orderDetail  group by orderID;";
-    private static String INSERT_ORDER_DETAIL = "INSERT INTO ordersdetail (orderId,productId,qualtityOrder,status)  values (?,?,?,?) ";
+    private static String INSERT_ORDER_DETAIL = "INSERT INTO ordersdetail (orderId,productId,qualtityOrder)  values (?,?,?) ";
     private static String INSERT_ORDER = "INSERT INTO orders (orderId,account) values (?,?) ";
-    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET qualtityOrder =? ,status='done' WHERE productId=? and orderId=?";
+    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET qualtity =? WHERE productId=? ";
+    private static String UPDATE_STATUS_IN_ORDER = "UPDATE ordersdetail SET status=? WHERE orderId=?";
     Connection connection = DataBaseConnection.getConnection();
 
     public List<Product> getProductListInOrder(String account, int orderId) throws SQLException {
@@ -61,7 +62,7 @@ public class OrderService {
     public void insertOrderDetailView(List<Product> listProduct, String account) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ORDER_DETAIL);
         PreparedStatement preparedStatement1 = connection.prepareStatement(INSERT_ORDER);
-        int orderID = (int) (Math.random() * 1357) * (int) (Math.random() * 5);
+        int orderID = (int) (Math.random() * 1000) * (int) (Math.random() * 5);
         preparedStatement1.setInt(1, orderID);
         preparedStatement1.setString(2, account);
         preparedStatement1.executeUpdate();
@@ -69,7 +70,7 @@ public class OrderService {
             preparedStatement.setInt(1, orderID);
             preparedStatement.setInt(2, product.getProductId());
             preparedStatement.setInt(3, product.getQuantity());
-            preparedStatement.setInt(4, 0);
+//            preparedStatement.setInt(4, "wating");
             preparedStatement.executeUpdate();
         }
     }
@@ -104,18 +105,35 @@ public class OrderService {
         return orderList;
     }
 
-    public   boolean isUpdatedListWhenBought(int productId,int newQuantity,int orderId)  {
-        PreparedStatement  preparedStatement  = null;
+    public boolean isUpdatedListWhenBought(List<Product> productList, int orderId, String status) {
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+        ProductService productService = new ProductService();
+
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_LIST_WHEN_BOUGHT);
-            preparedStatement.setInt(1,newQuantity);
-            preparedStatement.setInt(2,productId);
-            preparedStatement.setInt(3,orderId);
-            preparedStatement.executeUpdate();
+            preparedStatement1 = connection.prepareStatement(UPDATE_STATUS_IN_ORDER);
+            preparedStatement1.setString(1, status);
+            preparedStatement1.setInt(2,orderId);
+            preparedStatement1.executeUpdate();
+            for (Product product : productList) {
+
+                if (status.equalsIgnoreCase("done")) {
+                    Product productInDb = productService.findById(product.getProductId());
+                    int oldQuantity = productInDb.getQuantity();
+                    int quantityBuy = product.getQuantity();
+                    int newQuantity = oldQuantity - quantityBuy;
+                    preparedStatement = connection.prepareStatement(UPDATE_LIST_WHEN_BOUGHT);
+                    preparedStatement.setInt(1, newQuantity);
+                    preparedStatement.setInt(2, product.getProductId());
+                    preparedStatement.executeUpdate();
+                }
+            }
+
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false ;
+            return false;
         }
 
 

@@ -19,9 +19,6 @@
 <%--</html>--%>
 
 
-
-
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -70,6 +67,7 @@
             width: 300px;
             border: 3px solid #73AD21;
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -121,22 +119,22 @@
         <ul class="" style="margin: auto">
             <div class="row">
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active" aria-current="page" style="color: white"></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active " aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active " aria-current="page" style="color: white"></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active" aria-current="page" style="color: white"></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active" aria-current="page" style="color: white"></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active" aria-current="page" style="color: white"></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
+                    <a class="nav-link active" aria-current="page" style="color: white"></a>
                 </li>
             </div>
         </ul>
@@ -162,20 +160,28 @@
         </tr>
         customer
         <c:forEach var="order" items="${requestScope['orderList']}">
-            <form action="/product?action=confirmOrder&orderID='${order.orderId}&orderId=${order.orderId}'">
-            <tr>
-                <td><a href="/customer?action=orderDetail&account=${order.account}&orderId=${order.orderId}"><c:out
-                        value="${order.orderId}"></c:out></a></td>
-                <td> <a href="/customer?action=customerInformation&account=${order.account} "><c:out
-                        value="${order.account}"></c:out></a></td>
-                <td><c:out value="${order.totalPrices}"></c:out></td>
-                <td><select name="status" id="">
-                    <option value="waiting">waiting</option>
-                    <option value="shipping">shipping</option>
-                    <option value="done">done</option>
-                </select></td>
-                <td><c:out value="${order.orderDate}"></c:out></td>
-                <td><input type="submit" value="Confirm"></td>
+            <form action="/product?action=confirmOrder&orderId=${order.orderId}&account=${order.account}" method="post">
+                <tr>
+                    <td><a href="/customer?action=orderDetail&account=${order.account}&orderId=${order.orderId}"><c:out
+                            value="${order.orderId}"></c:out></a></td>
+                    <td><a href="/customer?action=customerInformation&account=${order.account} "><c:out
+                            value="${order.account}"></c:out></a></td>
+                    <td><c:out value="${order.totalPrices}"></c:out></td>
+
+                    <td><c:if test="${order.status=='done'}"> <c:out value="Done"> </c:out> </c:if>
+                        <c:if test="${order.status!='done'}">
+                            <select name="status" id="">
+                                <option value="waiting">waiting</option>
+                                <option value="shipping">shipping</option>
+                                <option value="done">done</option>
+                            </select>
+                        </c:if>
+                    </td>
+
+                    <td><c:if test="${order.status=='done'}">
+                        <c:out value="${order.orderDate}"></c:out>
+                    </c:if></td>
+                    <td><c:if test="${order.status!='done'}"><input type="submit" value="Confirm"></c:if></td>
             </form>
             </tr>
         </c:forEach>

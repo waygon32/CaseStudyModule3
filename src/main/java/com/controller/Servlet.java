@@ -5,7 +5,6 @@ import com.model.Customer;
 import com.model.Order;
 import com.model.Product;
 import com.service.CartService;
-import com.service.CustomerService;
 import com.service.OrderService;
 import com.service.ProductImp;
 import com.service.ProductService;
@@ -15,14 +14,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @WebServlet(name = "Servlet", value = "/product")
 public class Servlet extends HttpServlet {
-    static ProductService productData = new ProductService();
+    static ProductService productService = new ProductService();
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
@@ -75,6 +71,9 @@ public class Servlet extends HttpServlet {
             case "iphone8":
                 showIphoneID4(request, response);
                 break;
+            case "buy":
+                buyNow(request, response);
+                break;
             case "iphone7":
                 showIphoneID5(request, response);
                 break;
@@ -85,7 +84,7 @@ public class Servlet extends HttpServlet {
                 deleteInCart(request, response);
                 break;
             case "adminManganer":
-                adminManganer(request,response);
+                adminManganer(request, response);
             case "delete":
                 deleteProduct(request, response);
             default:
@@ -97,12 +96,12 @@ public class Servlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("Admin/MainManager.jsp");
         try {
             dispatcher.forward(request, response);
-        } catch (ServletException |IOException e) {
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void statistics(HttpServletRequest request, HttpServletResponse response)  {
+    private void statistics(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/statistics.jsp");
         try {
             request.setAttribute("bestSeller", cartService.getBestSeller());
@@ -188,7 +187,7 @@ public class Servlet extends HttpServlet {
 
 
     private void menuForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("products", productData.getListProductForCustomer());
+        request.setAttribute("products", productService.getListProductForCustomer());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/menu.jsp");
         requestDispatcher.forward(request, response);
     }
@@ -196,7 +195,7 @@ public class Servlet extends HttpServlet {
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
-        product = productData.findById(id);
+        product = productService.findById(id);
         request.setAttribute("product", product);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Product/edit.jsp");
         requestDispatcher.forward(request, response);
@@ -211,7 +210,7 @@ public class Servlet extends HttpServlet {
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            productData.deleteProduct(id);
+            productService.deleteProduct(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -222,46 +221,52 @@ public class Servlet extends HttpServlet {
     }
 
     private void showListProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute("products", productData.getAllList());
+        request.setAttribute("products", productService.getAllList());
         RequestDispatcher dispatcher = request.getRequestDispatcher("Product/list.jsp");
         dispatcher.forward(request, response);
     }
+
     //một cái gì đấy mà thế anh làm ra
-    private void showIphoneID1(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid");
-        List<Product> list= productImp.searchProduct(textSearch);
+    private void showIphoneID1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-    private void showIphoneID2(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid1");
-        List<Product> list= productImp.searchProduct(textSearch);
+
+    private void showIphoneID2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid1");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-    private void showIphoneID3(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid2");
-        List<Product> list= productImp.searchProduct(textSearch);
+
+    private void showIphoneID3(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid2");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-    private void showIphoneID4(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid3");
-        List<Product> list= productImp.searchProduct(textSearch);
+
+    private void showIphoneID4(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid3");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-    private void showIphoneID5(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid4");
-        List<Product> list= productImp.searchProduct(textSearch);
+
+    private void showIphoneID5(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid4");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-    private void showIphoneID6(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
-        String textSearch=request.getParameter("cid5");
-        List<Product> list= productImp.searchProduct(textSearch);
+
+    private void showIphoneID6(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("cid5");
+        List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
-        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
 
     @Override
@@ -274,9 +279,9 @@ public class Servlet extends HttpServlet {
             case "edit":
                 doUpdate(request, response);
                 break;
-            case "buy":
-                buyNow(request, response);
-                break;
+//            case "buy":
+//                buyNow(request, response);
+//                break;
             case "searchMenu":
                 showSearchProduct(request, response);
                 break;
@@ -308,20 +313,23 @@ public class Servlet extends HttpServlet {
         String account = request.getParameter("account");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         String status = request.getParameter("status");
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
         List<Product> productList = null;
         try {
             productList = orderService.getProductListInOrder(account, orderId);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        request.setAttribute("listOrder", productList);
-        request.setAttribute("orderId", orderId);
-        request.setAttribute("account", account);
-        if (status.equalsIgnoreCase("done")) {
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            for (Product product : listProductCart) {
-                boolean isUpdate = orderService.isUpdatedListWhenBought(product.getProductId(), quantity,orderId);
-            }
+//        request.setAttribute("listOrder", productList);
+//        request.setAttribute("orderId", orderId);
+//        request.setAttribute("account", account);
+         orderService.isUpdatedListWhenBought(productList,orderId,status);
+        try {
+            orderManagement(request,response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
         }
 
     }
@@ -361,7 +369,7 @@ public class Servlet extends HttpServlet {
         product.setDescribeProduct(describe);
 //        product.setImg(img);
         try {
-            productData.updateProduct(product);
+            productService.updateProduct(product);
             response.sendRedirect("/product");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -377,10 +385,10 @@ public class Servlet extends HttpServlet {
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String describe = request.getParameter("describe");
         String img = request.getParameter("img");
-        product = productData.isProductExist(typeID, color, memory);
+        product = productService.isProductExist(typeID, color, memory);
         if (product == null) {
             try {
-                productData.createProduct(new Product(typeID, color, memory, price, quantity, describe, img));
+                productService.createProduct(new Product(typeID, color, memory, price, quantity, describe, img));
                 response.sendRedirect("/product");
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
@@ -395,7 +403,7 @@ public class Servlet extends HttpServlet {
                 product.setImg(img);
             }
             try {
-                productData.updateProduct(product);
+                productService.updateProduct(product);
                 response.sendRedirect("/product");
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
@@ -433,7 +441,6 @@ public class Servlet extends HttpServlet {
         request.setAttribute("productsList", list);
         request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-
 
 
 }

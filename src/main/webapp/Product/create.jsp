@@ -14,7 +14,7 @@
 <form action="/product?action=create" method="post">
     <div style="align-content: center">
         <label for="typeID">Type ID </label>
-        <input type="text" name="typeId" placeholder=" type Id" id="typeID"><br>
+        <input type="text" name="typeId" placeholder=" type Id" id="typeID" required><br>
         <%--    <input type="text" name="color" placeholder="input color"><br>--%>
         <%--    <input type="text" name="memory" placeholder="input  memory">--%>
         <label for="color">Choose Color</label>
@@ -33,13 +33,13 @@
             <option value="256">256G</option>
         </select><br>
         <label for="price">Prices</label>
-        <input type="text" name="price" id="price" placeholder=" price"><br>
+        <input type="text" name="price" id="price" placeholder=" price" required><br>
         <label for="quantity">Quantity</label>
-        <input type="text" name="quantity" id="quantity" placeholder=" quantity"><br>
+        <input type="text" name="quantity" id="quantity" placeholder=" quantity" required><br>
         <label for="describe">Describe</label>
-        <input type="text" name="describe" id="describe" placeholder="describe"><br>
+        <input type="text" name="describe" id="describe" placeholder="describe" required><br>
         <label for="img">link img</label>
-        <input type="text" name="img" id="img">
+        <input type="text" name="img" id="img" required>
         <input type="submit" style="align-self: center">
     </div>
 </form>

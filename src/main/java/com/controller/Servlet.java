@@ -84,10 +84,21 @@ public class Servlet extends HttpServlet {
             case "deleteCart" :
                 deleteInCart(request,response);
                 break;
+            case "adminManganer":
+                adminManganer(request,response);
             case "delete":
                 deleteProduct(request, response);
             default:
                 showListProduct(request, response);
+        }
+    }
+
+    private void adminManganer(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Admin/MainManager.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException |IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -183,10 +194,12 @@ public class Servlet extends HttpServlet {
     }
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Product/edit.jsp");
-        requestDispatcher.forward(request, response);
+
         int id = Integer.parseInt(request.getParameter("id"));
         product = productData.findById(id);
+        request.setAttribute("product", product);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Product/edit.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     private void creatForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -307,20 +320,20 @@ public class Servlet extends HttpServlet {
 
     private void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        int id = Integer.parseInt(request.getParameter("id"));
-        String typeID = request.getParameter("typeId");
-        String color = request.getParameter("color");
-        int memory = Integer.parseInt(request.getParameter("memory"));
+//        String typeID = request.getParameter("typeId");
+//        String color = request.getParameter("color");
+//        int memory = Integer.parseInt(request.getParameter("memory"));
         String price = request.getParameter("price");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String describe = request.getParameter("describe");
-        String img = request.getParameter("img");
-        product.setTypeId(typeID);
-        product.setColor(color);
-        product.setMemory(memory);
+//        String img = request.getParameter("img");
+//        product.setTypeId(typeID);
+//        product.setColor(color);
+//        product.setMemory(memory);
         product.setPrice(price);
         product.setQuantity(quantity);
         product.setDescribeProduct(describe);
-        product.setImg(img);
+//        product.setImg(img);
         try {
             productData.updateProduct(product);
             response.sendRedirect("/product");

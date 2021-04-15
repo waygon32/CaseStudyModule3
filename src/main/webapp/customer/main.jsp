@@ -80,12 +80,20 @@
                 </div>
             </c:if>
             <c:if test="${sessionScope.acc !=null}">
-                <div class="col-lg-2 col-6 btn" style="margin: auto; text-align: center">
-                    Hello ${sessionScope.acc.account  }</div>
-                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
-                    <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
-                       onclick="window.location.href='/product?action=cart'">Cart</a>
-                </div>
+                <div class="col-lg-1 col-6 btn" style="margin: auto; text-align: center">
+                    Hello ${sessionScope.acc.account }</div>
+                <c:if test="${!sessionScope.acc.account.equals('admin')}">
+                    <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
+                        <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
+                           onclick="window.location.href='/product?action=cart'">Cart</a>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.acc.account.equals('admin')}">
+                    <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
+                        <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
+                           onclick="window.location.href='/product?action=adminManganer'">Manganer</a>
+                    </div>
+                </c:if>
                 <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
                        onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>

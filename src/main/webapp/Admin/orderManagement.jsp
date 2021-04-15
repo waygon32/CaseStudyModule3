@@ -111,10 +111,6 @@
                     Hello ${sessionScope.acc.account  }</div>
                 <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
-                       onclick="window.location.href='/product?action=cart'">Cart</a>
-                </div>
-                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
-                    <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
                        onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>
                 </div>
             </c:if>
@@ -125,22 +121,22 @@
         <ul class="" style="margin: auto">
             <div class="row">
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone11">Iphone 12</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active " aria-current="page" style="color: white" href="/iphone11">Iphone 11</a>
+                    <a class="nav-link active " aria-current="page" style="color: white" ></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphoneX">Iphone X</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone8">Iphone 8</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone7">Iphone 7</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone6">Iphone 6</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" ></a>
                 </li>
             </div>
         </ul>

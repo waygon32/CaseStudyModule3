@@ -138,6 +138,7 @@
     </div>
 </div>
 <div class="row">
+
     <c:forEach var="product" items="${requestScope['listCart']}">
         <div id="carouselExampleIndicators" class="carousel slide col-lg-3" data-bs-ride="carousel"
              style="position: relative; margin-top: 30px">
@@ -157,7 +158,7 @@
                         <div style="margin: auto">
                             <div class="font-weight-bold blue-text" style="text-align: center; color: red">
                                 <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
-                                <a href="/product?action=deleteInCart&id=${product.productId}">Remove</a>
+                                <a href="/product?action=deleteInCart&productId=${product.productId}">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -166,10 +167,20 @@
             </div>
         </div>
     </c:forEach>
-    <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
-        <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-           onclick="window.location.href='/customer?action=buy'" method="post">Buy now</a>
-    </div>
+    <%
+        if(request.getAttribute("listCart")!=null){
+            out.println(
+                    "        <div class=\"col-lg-2 col-6 btn btn-outline-success\" style=\"margin: auto; text-align: center\">\n" +
+                            "        <a style=\"margin-left: auto; margin-top: 10px; margin-bottom: 10px\"\n" +
+                            "           onclick=\"window.location.href='/customer?action=buy'\" method=\"post\">Buy now</a>\n" +
+                            "    </div>");
+        };
+    %>
+
+<%--    <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">--%>
+<%--        <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"--%>
+<%--           onclick="window.location.href='/customer?action=buy'" method="post">Buy now</a>--%>
+<%--    </div>--%>
 </div>
 </div>
 <!--end context-->

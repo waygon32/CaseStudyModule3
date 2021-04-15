@@ -7,6 +7,7 @@ import com.model.Product;
 import com.service.CartService;
 import com.service.CustomerService;
 import com.service.OrderService;
+import com.service.ProductImp;
 import com.service.ProductService;
 
 import javax.servlet.*;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "Servlet", value = "/product")
 public class Servlet extends HttpServlet {
@@ -24,6 +26,8 @@ public class Servlet extends HttpServlet {
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
+    static ProductImp productImp = new ProductImp();
+    CustomerServlet customerServlet = new CustomerServlet();
     List<Order> orderList;
     static OrderService orderService = new OrderService();
 
@@ -60,6 +64,25 @@ public class Servlet extends HttpServlet {
                 break;
             case "delete":
                 deleteProduct(request, response);
+                break;
+            case "iphone12":
+                showIphoneID1(request, response);
+                break;
+            case "iphone11":
+                showIphoneID2(request, response);
+                break;
+            case "iphoneX":
+                showIphoneID3(request, response);
+                break;
+            case "iphone8":
+                showIphoneID4(request, response);
+                break;
+            case "iphone7":
+                showIphoneID5(request, response);
+                break;
+            case "iphone6":
+                showIphoneID6(request, response);
+                break;
             default:
                 showListProduct(request, response);
         }
@@ -107,9 +130,16 @@ public class Servlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
-        cartService.getListProductCart(id, customer.getAccount());
+        if (customer != null) {
+            cartService.getListProductCart(id, customer.getAccount());
 //        Cart.setListProductInCart(listProductCart);
-        menuForm(request, response);
+            request.setAttribute("productsList", productImp.getListProductForClien());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            customerServlet.showLoginForm(request, response);
+        }
+//        có cần đặt k? xem xét sau
     }
 
 
@@ -121,7 +151,7 @@ public class Servlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (listProductCart != null) {
+        if (!listProductCart.isEmpty()) {
             request.setAttribute("listCart", listProductCart);
             long total = 0;
             for (Product product : listProductCart) {
@@ -131,7 +161,8 @@ public class Servlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/cart.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            menuForm(request, response);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/cart.jsp");
+            requestDispatcher.forward(request, response);
         }
 
     }
@@ -189,10 +220,26 @@ public class Servlet extends HttpServlet {
                 buyNow(request, response);
                 break;
             case "searchMenu":
-                searchMenu(request, response);
+                showSearchProduct(request, response);
                 break;
-
-
+            case "iphone12":
+                showIphoneID1(request, response);
+                break;
+            case "iphone11":
+                showIphoneID2(request, response);
+                break;
+            case "iphoneX":
+                showIphoneID3(request, response);
+                break;
+            case "iphone8":
+                showIphoneID4(request, response);
+                break;
+            case "iphone7":
+                showIphoneID5(request, response);
+                break;
+            case "iphone6":
+                showIphoneID6(request, response);
+                break;
         }
     }
 
@@ -207,7 +254,9 @@ public class Servlet extends HttpServlet {
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/buyStatus.jsp");
         requestDispatcher.forward(request, response);
-
+//        for(Product product : listProductCart){
+//            listProductCart.remove(product);
+//        }
     }
 
     private void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -269,22 +318,73 @@ public class Servlet extends HttpServlet {
         }
     }
 
-    private void searchMenu(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String key = request.getParameter("search");
-        List<Product> listSearched = new ArrayList<>();
-        for (Product product : productData.getListProductForCustomer()) {
-            if (key.equalsIgnoreCase(product.getName()) || key.equalsIgnoreCase(product.getColor())) {
-                listSearched.add(product);
-            }
-        }
-        if (!listSearched.isEmpty()) {
-            request.setAttribute("productsList", listSearched);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            menuForm(request, response);
-        }
+    //    private void searchMenu(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        String key = Pattern.compile(" ").matcher(request.getParameter("search")).replaceAll("");
+//
+//        List<Product> listSearched = new ArrayList<>();
+//        for (Product product : productData.getListProductForCustomer()) {
+//            if (key.equalsIgnoreCase(Pattern.compile(" ").matcher(product.getName()).replaceAll("")) || key.equalsIgnoreCase(product.getColor())) {
+//                listSearched.add(product);
+//            }
+//        }
+//        if (key.equals("")) {
+//            request.setAttribute("productsList", productImp.getListProductForClien());
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//            dispatcher.forward(request, response);
+//        } else {
+//            if (!listSearched.isEmpty()) {
+//                request.setAttribute("productsList", listSearched);
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//                dispatcher.forward(request, response);
+//            } else {
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//                dispatcher.forward(request, response);
+//            }
+//        }
+//    }
+    private void showSearchProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("search");
+        List<Product> list = productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
 
+//một cái gì đấy mà thế anh làm ra
+    private void showIphoneID1(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID2(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid1");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID3(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid2");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID4(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid3");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID5(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid4");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID6(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid5");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
 
 }

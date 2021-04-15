@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                 <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                   onclick="window.location.href='/customer?action=main'" method="post">Trang chủ</a>
+                   onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
             </div>
             <div class="col-lg-6 col-12">
                 <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
@@ -82,7 +82,11 @@
             <c:if test="${sessionScope.acc !=null}">
                 <div class="col-lg-2 col-6 btn" style="margin: auto; text-align: center">
                     Hello ${sessionScope.acc.account  }</div>
-                <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
+                    <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
+                       onclick="window.location.href='/product?action=cart'">Cart</a>
+                </div>
+                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
                        onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>
                 </div>
@@ -94,22 +98,22 @@
         <ul class="" style="margin: auto">
             <div class="row">
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone11">Iphone 12</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid" value="12" href="product?action=iphone12&cid=12">Iphone 12</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active " aria-current="page" style="color: white" href="/iphone11">Iphone 11</a>
+                    <a class="nav-link active " aria-current="page" style="color: white" name="cid1" value="11"  href="product?action=iphone11&cid1=11">Iphone 11</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphoneX">Iphone X</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid2" value="10"  href="product?action=iphoneX&cid2=10">Iphone X</a>
+                </li>
+                <li class="nav-item col-sm-4 col-lg-2" >
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid3" value="8"  href="product?action=iphone8&cid3=8">Iphone 8</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone8">Iphone 8</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid4" value="7"  href="product?action=iphone7&cid4=7">Iphone 7</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone7">Iphone 7</a>
-                </li>
-                <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone6">Iphone 6</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid5" value="6" href="product?action=iphone6&cid5=6">Iphone 6</a>
                 </li>
             </div>
         </ul>
@@ -158,17 +162,18 @@
                         </div>
                         <div>
                             <div style="text-align: center">
+<%--                                <h3><c:out value="${product.productId}"></c:out></h3>--%>
                                 <h3><c:out value="${product.name}"></c:out> <c:out
                                         value="${product.color}"></c:out></h3>
-                                <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out></h5>
+                                <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out>GB</h5>
                                 <h5><c:out value="${product.describeProduct}"></c:out></h5>
                             </div>
                             <div style="margin: auto">
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
-                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out><a
-                                            href="/iphone8"><img height="50px" width="50px"
-                                                                 src="https://previews.123rf.com/images/asmati/asmati1610/asmati161000086/63402708-shopping-cart-sign-white-icon-on-red-circle-.jpg"></a>
-                                    </h3>
+                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
+                                </div>
+                                <div class="font-weight-bold blue-text" style="text-align: center; color: red">
+                                    <a href="/product?action=addToCart&id=${product.productId} ">Add to Cart</a>
                                 </div>
                             </div>
                         </div>

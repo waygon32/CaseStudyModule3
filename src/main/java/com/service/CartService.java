@@ -18,7 +18,7 @@ public class CartService {
     private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?";
     private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
-    private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? WHERE productId=?";
+    private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? ,cartPrice=? WHERE productId=?";
     private static String DELETE_PRODUCT_IN_CART = "DELETE FROM cart WHERE productId=?";
     private static String GET_BEST_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) AS totalSold from vw_orderDetail  group by productID order by totalSold desc limit 3;";
     private static String GET_BAD_SELLER = "SELECT productId,typeName,color,memory,sum(quantityOrder) as totalSold from vw_orderDetail  group by productID order by totalSold asc limit 3;";
@@ -40,10 +40,10 @@ public class CartService {
                     if (product.getName().equals(name) && product.getColor().equals(color) && memory.equals(product.getMemory())) {
                         isExist = false;
                         int newQuantity = product.getQuantity() + 1;
-                        product.setQuantity(newQuantity);
+//                        product.setQuantity(newQuantity);
                         long newPrice = Long.parseLong(product.getPrice()) + Long.parseLong(price);
-                        product.setPrice( Long.toString(newPrice));
-                        updateCartInDataBase(product.getProductId(), newQuantity);
+//                        product.setPrice(Long.toString(newPrice));
+                        updateCartInDataBase(product.getProductId(), newQuantity,Long.toString(newPrice));
                     }
                 }
                 if (isExist) {
@@ -59,10 +59,11 @@ public class CartService {
 //        return listProduct;
     }
 
-    private void updateCartInDataBase(int productId, int newQuantity) throws SQLException {
+    private void updateCartInDataBase(int productId, int newQuantity, String newPrice) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CART_BY_ID);
         preparedStatement.setInt(1, newQuantity);
-        preparedStatement.setInt(2, productId);
+        preparedStatement.setString(2, newPrice);
+        preparedStatement.setInt(3, productId);
         preparedStatement.executeUpdate();
     }
 
@@ -99,7 +100,8 @@ public class CartService {
             String color = resultSet.getString("color");
             int memory = resultSet.getInt("memory");
             int quantity = resultSet.getInt("quantity");
-            String price = resultSet.getString("price");
+            String price = resultSet.getString("cartPrice");
+//            String cartPrice= resultSet.getString("cartPrice");
             Product product = new Product(id, name, color, memory, quantity, price);
             productList.add(product);
         }

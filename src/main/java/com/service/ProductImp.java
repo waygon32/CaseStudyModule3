@@ -124,6 +124,54 @@ public class ProductImp implements IProduct {
         }
         return productList;
     }
+    public List<Product> searchProductID(String productId) {
+        List<Product> productIDList = new ArrayList<>();
+        String searchProduct = "select producttype.typename,productdetail.productId,productdetail.color,productdetail.memory,\n" +
+                "    productdetail.price, productdetail.describeProduct,productdetail.img\n" +
+                "    from productdetail inner join producttype  on productdetail.typeID = producttype.typeID where producttype.typeID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(searchProduct);
+            preparedStatement.setString(1, "%"+productId+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("typename");
+                String color = resultSet.getString("color");
+                int memory = resultSet.getInt("memory");
+                String price = resultSet.getString("price");
+                String describeProduct = resultSet.getString("describeProduct");
+                String img = resultSet.getString("img");
+                productIDList.add(new Product(color, memory, price, describeProduct, img, name));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productIDList;
+    }
+    public List<Product> searchProduct(String text) {
+        List<Product> productList = new ArrayList<>();
+        String searchProduct = "select producttype.typename,productdetail.color,productdetail.memory, productdetail.price, productdetail.describeProduct,productdetail.img from productdetail inner join producttype on productdetail.typeID = producttype.typeID where typename like ? or color like ? or memory like ? or price like ? or describeProduct like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(searchProduct);
+            preparedStatement.setString(1, "%"+text+"%");
+            preparedStatement.setString(2, "%"+text+"%");
+            preparedStatement.setString(3, "%"+text+"%");
+            preparedStatement.setString(4, "%"+text+"%");
+            preparedStatement.setString(5, "%"+text+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("typename");
+                String color = resultSet.getString("color");
+                int memory = resultSet.getInt("memory");
+                String price = resultSet.getString("price");
+                String describeProduct = resultSet.getString("describeProduct");
+                String img = resultSet.getString("img");
+                productList.add(new Product(color, memory, price, describeProduct, img, name));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
 
 }
 

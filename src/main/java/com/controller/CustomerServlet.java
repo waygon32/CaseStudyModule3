@@ -25,6 +25,7 @@ public class CustomerServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
+        System.out.println("action"+action);
         switch (action) {
             case "loginForm": {
                 showLoginForm(request, response);
@@ -38,7 +39,7 @@ public class CustomerServlet extends HttpServlet {
                 logOut(request, response);
                 break;
             }
-            case "main": {
+            case "showMain": {
                 showMain(request, response);
                 break;
             }
@@ -93,8 +94,8 @@ public class CustomerServlet extends HttpServlet {
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.removeAttribute("acc");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-        dispatcher.forward(request, response);
+        session.invalidate();
+        showMain(request,response);
     }
 
     private void showSignUpForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,13 +103,14 @@ public class CustomerServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void showLoginForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+    public void showLoginForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Call Login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/loginForm.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void showMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void showMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Call Home");
         request.setAttribute("productsList", productImp.getListProductForClien());
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
         dispatcher.forward(request, response);
@@ -177,8 +179,7 @@ public class CustomerServlet extends HttpServlet {
             if (!customer.getAccount().equals("admin")) {
                 HttpSession session = request.getSession();
                 session.setAttribute("acc", customer);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-                dispatcher.forward(request, response);
+                showMain(request,response);
 //            response.sendRedirect("customer/main.jsp");
             } else {
                 HttpSession session = request.getSession();

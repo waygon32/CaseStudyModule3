@@ -1,11 +1,35 @@
 package com.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Order {
     private int orderId;
     private String totalPrices;
     private Customer customer;
     private String account;
     private Cart cart;
+    private String status;
+    private String orderDate;
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
 
 
 //    public Order(int orderID, Customer customer, Cart cart) {
@@ -22,10 +46,13 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Order(int orderId, String account, String total) {
+    public Order(int orderId, String account, String total, String status, String orderDate) {
         this.orderId= orderId;
         this.account = account;
         this.totalPrices = total;
+        this.status=status;
+        this.orderDate = orderDate;
+
     }
 
     public String getAccount() {

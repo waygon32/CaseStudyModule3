@@ -33,7 +33,7 @@
 
         a {
             text-decoration: none;
-            color: white;
+            color: blue;
             text-align: center;
         }
 

@@ -27,7 +27,7 @@
 
         a {
             text-decoration: none;
-            color: white;
+            color: blue;
             text-align: center;
         }
 
@@ -149,15 +149,15 @@
                     </div>
                     <div>
                         <div style="text-align: center">
-                            <h3><<c:out value="${product.name}"></c:out>
-                                <c:out value="${product.color}"></c:out></h3>
+                            <h3>Tên sản phẩm: <c:out value="${product.name}"></c:out></h3>
+                            <h3>Màu: <c:out value="${product.color}"></c:out></h3>
                             <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out>GB</h5>
                             <h5>Số lượng: <c:out value="${product.quantity}"></c:out></h5>
                         </div>
                         <div style="margin: auto">
                             <div class="font-weight-bold blue-text" style="text-align: center; color: red">
                                 <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
-                                <a href="/product?action=deleteInCart&name=${product.color}">Delete</a>
+                                <a href="/product?action=deleteInCart&id=${product.productId}">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -166,6 +166,10 @@
             </div>
         </div>
     </c:forEach>
+    <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+        <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
+           onclick="window.location.href='/customer?action=buy'" method="post">Buy now</a>
+    </div>
 </div>
 </div>
 <!--end context-->

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CartService {
     private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?";
-    private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account) values(?,?,?) ";
+    private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account, cartPrice) values(?,?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
     private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? ,cartPrice=? WHERE productId=?";
     private static String DELETE_PRODUCT_IN_CART = "DELETE FROM cart WHERE productId=?";
@@ -40,9 +40,9 @@ public class CartService {
                     if (product.getName().equals(name) && product.getColor().equals(color) && memory.equals(product.getMemory())) {
                         isExist = false;
                         int newQuantity = product.getQuantity() + 1;
-//                        product.setQuantity(newQuantity);
+                        product.setQuantity(newQuantity);
                         long newPrice = Long.parseLong(product.getPrice()) + Long.parseLong(price);
-//                        product.setPrice(Long.toString(newPrice));
+                        product.setPrice(Long.toString(newPrice));
                         updateCartInDataBase(product.getProductId(), newQuantity,Long.toString(newPrice));
                     }
                 }
@@ -85,6 +85,7 @@ public class CartService {
         preparedStatement.setInt(1, product.getProductId());
         preparedStatement.setInt(2, product.getQuantity());
         preparedStatement.setString(3, account);
+        preparedStatement.setString(4,product.getPrice());
         preparedStatement.executeUpdate();
 
     }

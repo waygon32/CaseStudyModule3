@@ -82,7 +82,11 @@
             <c:if test="${sessionScope.acc !=null}">
                 <div class="col-lg-2 col-6 btn" style="margin: auto; text-align: center">
                     Hello ${sessionScope.acc.account  }</div>
-                <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
+                    <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
+                       onclick="window.location.href='/product?action=cart'">Cart</a>
+                </div>
+                <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
                        onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>
                 </div>
@@ -161,15 +165,15 @@
 <%--                                <h3><c:out value="${product.productId}"></c:out></h3>--%>
                                 <h3><c:out value="${product.name}"></c:out> <c:out
                                         value="${product.color}"></c:out></h3>
-                                <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out></h5>
+                                <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out>GB</h5>
                                 <h5><c:out value="${product.describeProduct}"></c:out></h5>
                             </div>
                             <div style="margin: auto">
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
-                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out><a
-                                            action="product?action=addToCart"><img height="50px" width="50px"
-                                                                 src="https://previews.123rf.com/images/asmati/asmati1610/asmati161000086/63402708-shopping-cart-sign-white-icon-on-red-circle-.jpg"></a>
-                                    </h3>
+                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
+                                </div>
+                                <div class="font-weight-bold blue-text" style="text-align: center; color: red">
+                                    <a href="/product?action=addToCart&id=${product.productId} ">Add to Cart</a>
                                 </div>
                             </div>
                         </div>

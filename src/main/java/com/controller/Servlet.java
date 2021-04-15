@@ -6,6 +6,7 @@ import com.model.Order;
 import com.model.Product;
 import com.service.CartService;
 import com.service.CustomerService;
+import com.service.ProductImp;
 import com.service.ProductService;
 
 import javax.servlet.*;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "Servlet", value = "/product")
 public class Servlet extends HttpServlet {
@@ -23,14 +25,16 @@ public class Servlet extends HttpServlet {
     static CartService cartService = new CartService();
     static Product product;
     static List<Product> listProductCart;
+    static ProductImp productImp = new ProductImp();
+    CustomerServlet customerServlet = new CustomerServlet();
     List<Order> orderList;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null) {
-            action = " ";
-        }
+//        if (action == null) {
+//            action = " ";
+//        }
         switch (action) {
             case "create":
                 creatForm(request, response);
@@ -51,7 +55,7 @@ public class Servlet extends HttpServlet {
                 deleteInCart(request, response);
                 break;
             case "orderManagement":
-                OrderManagement(request, response);
+                orderManagement(request, response);
                 break;
             case "delete":
                 deleteProduct(request, response);
@@ -60,7 +64,7 @@ public class Servlet extends HttpServlet {
         }
     }
 
-    private void OrderManagement(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
+    private void orderManagement(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("orderList", orderList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/orderManagement.jsp");
         requestDispatcher.forward(request, response);
@@ -86,9 +90,16 @@ public class Servlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
-        cartService.getListProductCart(id, customer.getAccount());
+        if (customer != null) {
+            cartService.getListProductCart(id, customer.getAccount());
 //        Cart.setListProductInCart(listProductCart);
-        menuForm(request, response);
+            request.setAttribute("productsList", productImp.getListProductForClien());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            customerServlet.showLoginForm(request, response);
+        }
+//        có cần đặt k? xem xét sau
     }
 
 
@@ -100,7 +111,7 @@ public class Servlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (listProductCart != null) {
+        if (!listProductCart.isEmpty()) {
             request.setAttribute("listCart", listProductCart);
             long total = 0;
             for (Product product : listProductCart) {
@@ -110,7 +121,8 @@ public class Servlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/cart.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            menuForm(request, response);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/cart.jsp");
+            requestDispatcher.forward(request, response);
         }
 
     }
@@ -168,7 +180,7 @@ public class Servlet extends HttpServlet {
                 buyNow(request, response);
                 break;
             case "searchMenu":
-                searchMenu(request, response);
+                showSearchProduct(request, response);
                 break;
 
 
@@ -208,6 +220,7 @@ public class Servlet extends HttpServlet {
         }
 
     }
+
     private void doCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String typeID = request.getParameter("typeId");
         String color = request.getParameter("color");
@@ -242,22 +255,35 @@ public class Servlet extends HttpServlet {
         }
     }
 
-    private void searchMenu(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String key = request.getParameter("search");
-        List<Product> listSearched = new ArrayList<>();
-        for (Product product : productData.getListProductForCustomer()) {
-            if (key.equalsIgnoreCase(product.getName()) || key.equalsIgnoreCase(product.getColor())) {
-                listSearched.add(product);
-            }
-        }
-        if (!listSearched.isEmpty()) {
-            request.setAttribute("productsList", listSearched);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            menuForm(request, response);
-        }
+    //    private void searchMenu(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        String key = Pattern.compile(" ").matcher(request.getParameter("search")).replaceAll("");
+//
+//        List<Product> listSearched = new ArrayList<>();
+//        for (Product product : productData.getListProductForCustomer()) {
+//            if (key.equalsIgnoreCase(Pattern.compile(" ").matcher(product.getName()).replaceAll("")) || key.equalsIgnoreCase(product.getColor())) {
+//                listSearched.add(product);
+//            }
+//        }
+//        if (key.equals("")) {
+//            request.setAttribute("productsList", productImp.getListProductForClien());
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//            dispatcher.forward(request, response);
+//        } else {
+//            if (!listSearched.isEmpty()) {
+//                request.setAttribute("productsList", listSearched);
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//                dispatcher.forward(request, response);
+//            } else {
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+//                dispatcher.forward(request, response);
+//            }
+//        }
+//    }
+    private void showSearchProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String textSearch = request.getParameter("search").replaceAll("\\s","");
+        List<Product> list = productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request, response);
     }
-
 
 }

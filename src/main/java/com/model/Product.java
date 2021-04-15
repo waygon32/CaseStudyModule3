@@ -64,6 +64,14 @@ public class Product {
         this.price = price;
         this.productId = id;
     }
+    public Product(String color, int memory, String price, String describeProduct, String img, String name) {
+        this.color = color;
+        this.memory = memory;
+        this.price = price;
+        this.describeProduct = describeProduct;
+        this.img = img;
+        this.name = name;
+    }
 
     public Product(int id, String name, String color, int memory, int quantity, String price) {
         this.color = color;

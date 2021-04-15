@@ -59,6 +59,25 @@ public class Servlet extends HttpServlet {
                 break;
             case "delete":
                 deleteProduct(request, response);
+                break;
+            case "iphone12":
+                showIphoneID1(request, response);
+                break;
+            case "iphone11":
+                showIphoneID2(request, response);
+                break;
+            case "iphoneX":
+                showIphoneID3(request, response);
+                break;
+            case "iphone8":
+                showIphoneID4(request, response);
+                break;
+            case "iphone7":
+                showIphoneID5(request, response);
+                break;
+            case "iphone6":
+                showIphoneID6(request, response);
+                break;
             default:
                 showListProduct(request, response);
         }
@@ -182,8 +201,24 @@ public class Servlet extends HttpServlet {
             case "searchMenu":
                 showSearchProduct(request, response);
                 break;
-
-
+            case "iphone12":
+                showIphoneID1(request, response);
+                break;
+            case "iphone11":
+                showIphoneID2(request, response);
+                break;
+            case "iphoneX":
+                showIphoneID3(request, response);
+                break;
+            case "iphone8":
+                showIphoneID4(request, response);
+                break;
+            case "iphone7":
+                showIphoneID5(request, response);
+                break;
+            case "iphone6":
+                showIphoneID6(request, response);
+                break;
         }
     }
 
@@ -280,10 +315,48 @@ public class Servlet extends HttpServlet {
 //        }
 //    }
     private void showSearchProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String textSearch = request.getParameter("search").replaceAll("\\s","");
+        String textSearch = request.getParameter("search");
         List<Product> list = productImp.searchProduct(textSearch);
         request.setAttribute("productsList", list);
         request.getRequestDispatcher("customer/main.jsp").forward(request, response);
+    }
+
+//một cái gì đấy mà thế anh làm ra
+    private void showIphoneID1(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID2(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid1");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID3(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid2");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID4(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid3");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID5(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid4");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
+    }
+    private void showIphoneID6(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+        String textSearch=request.getParameter("cid5");
+        List<Product> list= productImp.searchProduct(textSearch);
+        request.setAttribute("productsList", list);
+        request.getRequestDispatcher("customer/main.jsp").forward(request,response);
     }
 
 }

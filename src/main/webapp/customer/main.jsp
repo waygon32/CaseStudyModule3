@@ -98,22 +98,22 @@
         <ul class="" style="margin: auto">
             <div class="row">
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone11">Iphone 12</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid" value="12" href="product?action=iphone12&cid=12">Iphone 12</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active " aria-current="page" style="color: white" href="/iphone11">Iphone 11</a>
+                    <a class="nav-link active " aria-current="page" style="color: white" name="cid1" value="11"  href="product?action=iphone11&cid1=11">Iphone 11</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphoneX">Iphone X</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid2" value="10"  href="product?action=iphoneX&cid2=10">Iphone X</a>
+                </li>
+                <li class="nav-item col-sm-4 col-lg-2" >
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid3" value="8"  href="product?action=iphone8&cid3=8">Iphone 8</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone8">Iphone 8</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid4" value="7"  href="product?action=iphone7&cid4=7">Iphone 7</a>
                 </li>
                 <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone7">Iphone 7</a>
-                </li>
-                <li class="nav-item col-sm-4 col-lg-2">
-                    <a class="nav-link active" aria-current="page" style="color: white" href="/iphone6">Iphone 6</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" name="cid5" value="6" href="product?action=iphone6&cid5=6">Iphone 6</a>
                 </li>
             </div>
         </ul>

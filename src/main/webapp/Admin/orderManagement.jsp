@@ -160,17 +160,23 @@
             <td>Order Date</td>
             <td>Action</td>
         </tr>
-
+        customer
         <c:forEach var="order" items="${requestScope['orderList']}">
+            <form action="/product?action=confirmOrder&orderID='${order.orderId}&orderId=${order.orderId}'">
             <tr>
                 <td><a href="/customer?action=orderDetail&account=${order.account}&orderId=${order.orderId}"><c:out
                         value="${order.orderId}"></c:out></a></td>
                 <td> <a href="/customer?action=customerInformation&account=${order.account} "><c:out
                         value="${order.account}"></c:out></a></td>
                 <td><c:out value="${order.totalPrices}"></c:out></td>
-                <td><c:out value="${order.status}"></c:out></td>
+                <td><select name="status" id="">
+                    <option value="waiting">waiting</option>
+                    <option value="shipping">shipping</option>
+                    <option value="done">done</option>
+                </select></td>
                 <td><c:out value="${order.orderDate}"></c:out></td>
-                <td><a href="/product?action=confirmOrder&orderID='${order.orderId}'">Confirm</a></td>
+                <td><input type="submit" value="Confirm"></td>
+            </form>
             </tr>
         </c:forEach>
     </table>

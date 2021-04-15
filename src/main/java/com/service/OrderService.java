@@ -13,11 +13,11 @@ import java.util.List;
 
 public class OrderService {
     private static String SELECT_FROM_ORDER_DETAIL_VIEW_BY_ACCOUNT = "SELECT * FROM vw_orderdetail WHERE account =? and orderID=?";
-    private static String SELECT_FROM_ORDER_HISTORY = "SELECT * FROM vw_orderdetail WHERE account =? ";
+    private static String SELECT_FROM_ORDER_HISTORY = "SELECT * FROM vw_orderdetail WHERE account =? and  status='Done' ";
     private static String SELECT_FROM_ORDER_DETAIL_VIEW = "SELECT orderID, account , sum(prices) AS total , status,orderDate FROM vw_orderDetail  group by orderID;";
     private static String INSERT_ORDER_DETAIL = "INSERT INTO ordersdetail (orderId,productId,qualtityOrder,status)  values (?,?,?,?) ";
     private static String INSERT_ORDER = "INSERT INTO orders (orderId,account) values (?,?) ";
-    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET quantity =? WHERE productId=? ";
+    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET qualtityOrder =? ,status='done' WHERE productId=? and orderId=?";
     Connection connection = DataBaseConnection.getConnection();
 
     public List<Product> getProductListInOrder(String account, int orderId) throws SQLException {
@@ -103,11 +103,24 @@ public class OrderService {
         }
         return orderList;
     }
-//    public void removeProductInDataBaseWhenBought(String account , int orderId) throws SQLException {
-//        List<Product> productList = getProductListInOrder(account,orderId);
-//        if(!productList.isEmpty()){
-//
-//        }
+
+    public   boolean isUpdatedListWhenBought(int productId,int newQuantity,int orderId)  {
+        PreparedStatement  preparedStatement  = null;
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_LIST_WHEN_BOUGHT);
+            preparedStatement.setInt(1,newQuantity);
+            preparedStatement.setInt(2,productId);
+            preparedStatement.setInt(3,orderId);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false ;
+        }
+
+
+    }
+
 }
 
 

@@ -71,8 +71,8 @@ public class CustomerServlet extends HttpServlet {
             } catch (ServletException |IOException  e) {
                 e.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

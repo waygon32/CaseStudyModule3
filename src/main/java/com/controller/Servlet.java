@@ -81,8 +81,8 @@ public class Servlet extends HttpServlet {
             case "iphone6":
                 showIphoneID6(request, response);
                 break;
-            case "deleteCart" :
-                deleteInCart(request,response);
+            case "deleteCart":
+                deleteInCart(request, response);
                 break;
             case "adminManganer":
                 adminManganer(request,response);
@@ -105,10 +105,10 @@ public class Servlet extends HttpServlet {
     private void statistics(HttpServletRequest request, HttpServletResponse response)  {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/statistics.jsp");
         try {
-            request.setAttribute("bestSeller",cartService.getBestSeller());
-            request.setAttribute("badSeller",cartService.getBadSeller());
-            requestDispatcher.forward(request,response);
-        } catch (ServletException  | IOException |SQLException e) {
+            request.setAttribute("bestSeller", cartService.getBestSeller());
+            request.setAttribute("badSeller", cartService.getBadSeller());
+            requestDispatcher.forward(request, response);
+        } catch (ServletException | IOException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -119,7 +119,7 @@ public class Servlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        request.setAttribute("orderList",  orderList);
+        request.setAttribute("orderList", orderList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/orderManagement.jsp");
         requestDispatcher.forward(request, response);
 
@@ -127,13 +127,13 @@ public class Servlet extends HttpServlet {
 
     private void deleteInCart(HttpServletRequest request, HttpServletResponse response) {
 //      int id  = Integer.getInteger(request.getParameter("productId"));
-      int id = Integer.parseInt(request.getParameter("productId"));
+        int id = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
         try {
-            cartService.deleteProductInCart(id,customer.getAccount());
+            cartService.deleteProductInCart(id, customer.getAccount());
             try {
-                showCartForm(request,response);
+                showCartForm(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -280,6 +280,9 @@ public class Servlet extends HttpServlet {
             case "searchMenu":
                 showSearchProduct(request, response);
                 break;
+            case "confirmOrder":
+                confirmOrder(request, response);
+                break;
             case "iphone12":
                 showIphoneID1(request, response);
                 break;
@@ -301,13 +304,36 @@ public class Servlet extends HttpServlet {
         }
     }
 
+    private void confirmOrder(HttpServletRequest request, HttpServletResponse response) {
+        String account = request.getParameter("account");
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        String status = request.getParameter("status");
+        List<Product> productList = null;
+        try {
+            productList = orderService.getProductListInOrder(account, orderId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        request.setAttribute("listOrder", productList);
+        request.setAttribute("orderId", orderId);
+        request.setAttribute("account", account);
+        if (status.equalsIgnoreCase("done")) {
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            for (Product product : listProductCart) {
+                boolean isUpdate = orderService.isUpdatedListWhenBought(product.getProductId(), quantity,orderId);
+            }
+        }
+
+    }
+
     private void buyNow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
         try {
             orderService.insertOrderDetailView(listProductCart, customer.getAccount());
-            for(Product  product :  listProductCart){
-            cartService.deleteProductInCart(product.getProductId(),customer.getAccount());}
+            for (Product product : listProductCart) {
+                cartService.deleteProductInCart(product.getProductId(), customer.getAccount());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

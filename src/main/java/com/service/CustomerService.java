@@ -59,8 +59,8 @@ public class CustomerService {
             preparedStatement.setString(4,address);
             preparedStatement.setString(5,phoneNumber);
             preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     public  Customer getCustomerByAccount(String account) {

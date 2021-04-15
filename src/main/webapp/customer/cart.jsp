@@ -149,8 +149,8 @@
                     </div>
                     <div>
                         <div style="text-align: center">
-                            <h3>Tên sản phẩm: <c:out value="${product.name}"></c:out></h3>
-                            <h3>Màu: <c:out value="${product.color}"></c:out></h3>
+                            <h3><<c:out value="${product.name}"></c:out>
+                                <c:out value="${product.color}"></c:out></h3>
                             <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out>GB</h5>
                             <h5>Số lượng: <c:out value="${product.quantity}"></c:out></h5>
                         </div>

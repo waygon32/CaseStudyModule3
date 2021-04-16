@@ -86,6 +86,16 @@
             width: 300px;
             border: 3px solid #73AD21;
         }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -152,16 +162,21 @@
 <div class="row">
 </div>
 
-<table align="center" style="width: 500px ; text-align:center ;  height: 300px " border="1px solid ">
+<table align="center" >
+    <tr>
+        <td colspan="3">
+            <h1 style="text-align: center">Admin manganer</h1>
+        </td>
+    </tr>
 
     <tr>
         <td>Funtion</td>
         <td>Describe</td>
-        <td>GOOO</td>
+        <td></td>
     </tr>
     <tr>
-        <td>CRUD</td>
-        <td>CRUD cung cấp những tính năng như thêm , sửa , xóa sản phẩm hệ thống</td>
+        <td>Quản lý sản phẩm</td>
+        <td>Thao tác thêm , sửa , xóa sản phẩm hệ thống</td>
         <td><a href="/product">Go</a></td>
     </tr>
     <tr>

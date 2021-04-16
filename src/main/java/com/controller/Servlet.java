@@ -85,6 +85,7 @@ public class Servlet extends HttpServlet {
                 break;
             case "adminManganer":
                 adminManganer(request, response);
+                break;
             case "delete":
                 deleteProduct(request, response);
             default:

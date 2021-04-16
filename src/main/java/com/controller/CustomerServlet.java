@@ -142,7 +142,7 @@ public class CustomerServlet extends HttpServlet {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String phoneNumber = request.getParameter("phoneNumber");
-        if (password == rePassword) {
+        if (password.equals(rePassword)) {
             CustomerService customerService = new CustomerService();
             boolean check = customerService.checkAccount(account);
             if (check) {

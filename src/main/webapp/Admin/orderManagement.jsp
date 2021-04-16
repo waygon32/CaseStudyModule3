@@ -156,6 +156,7 @@
             <td>Total</td>
             <td>Status</td>
             <td>Order Date</td>
+            <td>Received Time</td>
             <td>Action</td>
         </tr>
         customer
@@ -169,9 +170,15 @@
                     <td><c:out value="${order.totalPrices}"></c:out></td>
 
                     <td><c:if test="${order.status=='done'}"> <c:out value="Done"> </c:out> </c:if>
-                        <c:if test="${order.status!='done'}">
+                        <c:if test="${order.status=='waiting'}">
                             <select name="status" id="">
                                 <option value="waiting">waiting</option>
+                                <option value="shipping">shipping</option>
+                                <option value="done">done</option>
+                            </select>
+                        </c:if>
+                        <c:if test="${order.status=='shipping'}">
+                            <select name="status" id="">
                                 <option value="shipping">shipping</option>
                                 <option value="done">done</option>
                             </select>
@@ -181,6 +188,7 @@
                     <td><c:if test="${order.status=='done'}">
                         <c:out value="${order.orderDate}"></c:out>
                     </c:if></td>
+                    <td>tuwj ghi</td>
                     <td><c:if test="${order.status!='done'}"><input type="submit" value="Confirm"></c:if></td>
             </form>
             </tr>

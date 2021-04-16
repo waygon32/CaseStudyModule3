@@ -157,7 +157,7 @@ public class Servlet extends HttpServlet {
         } else {
             customerServlet.showLoginForm(request, response);
         }
-//        có cần đặt k? xem xét sau
+//        có, cần đặt k? xem xét sau
     }
 
 
@@ -323,9 +323,9 @@ public class Servlet extends HttpServlet {
 //        request.setAttribute("listOrder", productList);
 //        request.setAttribute("orderId", orderId);
 //        request.setAttribute("account", account);
-         orderService.isUpdatedListWhenBought(productList,orderId,status);
+        orderService.isUpdatedListWhenBought(productList, orderId, status);
         try {
-            orderManagement(request,response);
+            orderManagement(request, response);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ServletException e) {
@@ -338,6 +338,7 @@ public class Servlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
         try {
+            listProductCart = cartService.getCartInDataBaseByAccount(customer.getAccount());
             orderService.insertOrderDetailView(listProductCart, customer.getAccount());
             for (Product product : listProductCart) {
                 cartService.deleteProductInCart(product.getProductId(), customer.getAccount());
@@ -353,17 +354,10 @@ public class Servlet extends HttpServlet {
     }
 
     private void doUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        String typeID = request.getParameter("typeId");
-//        String color = request.getParameter("color");
-//        int memory = Integer.parseInt(request.getParameter("memory"));
         String price = request.getParameter("price");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String describe = request.getParameter("describe");
-//        String img = request.getParameter("img");
-//        product.setTypeId(typeID);
-//        product.setColor(color);
-//        product.setMemory(memory);
+
         product.setPrice(price);
         product.setQuantity(quantity);
         product.setDescribeProduct(describe);
@@ -411,30 +405,7 @@ public class Servlet extends HttpServlet {
         }
     }
 
-    //    private void searchMenu(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        String key = Pattern.compile(" ").matcher(request.getParameter("search")).replaceAll("");
-//
-//        List<Product> listSearched = new ArrayList<>();
-//        for (Product product : productData.getListProductForCustomer()) {
-//            if (key.equalsIgnoreCase(Pattern.compile(" ").matcher(product.getName()).replaceAll("")) || key.equalsIgnoreCase(product.getColor())) {
-//                listSearched.add(product);
-//            }
-//        }
-//        if (key.equals("")) {
-//            request.setAttribute("productsList", productImp.getListProductForClien());
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-//            dispatcher.forward(request, response);
-//        } else {
-//            if (!listSearched.isEmpty()) {
-//                request.setAttribute("productsList", listSearched);
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-//                dispatcher.forward(request, response);
-//            } else {
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-//                dispatcher.forward(request, response);
-//            }
-//        }
-//    }
+
     private void showSearchProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String textSearch = request.getParameter("search");
         List<Product> list = productImp.searchProduct(textSearch);

@@ -187,10 +187,15 @@
                             </select>
                         </c:if>
                     </td>
-                    <td><c:if test="${order.status=='done'}">
+
+                    <td><c:if test="${order.status.equals('shipping') || order.status.equals('done')}">
                         <c:out value="${order.orderDate}"></c:out>
                     </c:if></td>
-                    <td>tuwj ghi</td>
+                    <td> <c:if test="${order.status.equals('done')}">
+                        <c:out value="${order.receivedTime}"></c:out>
+                    </c:if></td>
+
+
                     <td><c:if test="${order.status!='done'}"><input type="submit" value="Confirm"></c:if></td>
             </form>
             </tr>

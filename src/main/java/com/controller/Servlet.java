@@ -125,7 +125,6 @@ public class Servlet extends HttpServlet {
     }
 
     private void deleteInCart(HttpServletRequest request, HttpServletResponse response) {
-//      int id  = Integer.getInteger(request.getParameter("productId"));
         int id = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession(false);
         Customer customer = (Customer) session.getAttribute("acc");
@@ -188,7 +187,7 @@ public class Servlet extends HttpServlet {
 
     private void menuForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("products", productService.getListProductForCustomer());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/menu.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/main.jsp");
         requestDispatcher.forward(request, response);
     }
 

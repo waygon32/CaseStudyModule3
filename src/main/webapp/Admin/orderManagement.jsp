@@ -169,22 +169,24 @@
                             value="${order.account}"></c:out></a></td>
                     <td><c:out value="${order.totalPrices}"></c:out></td>
 
-                    <td><c:if test="${order.status=='done'}"> <c:out value="Done"> </c:out> </c:if>
-                        <c:if test="${order.status=='waiting'}">
+                    <td>
+                        <c:if test="${order.status.equals('done')}">
+                            <c:out value="Done"> </c:out>
+                        </c:if>
+                        <c:if test="${order.status.equals('waiting')}">
                             <select name="status" id="">
                                 <option value="waiting">waiting</option>
                                 <option value="shipping">shipping</option>
                                 <option value="done">done</option>
                             </select>
                         </c:if>
-                        <c:if test="${order.status=='shipping'}">
+                        <c:if test="${order.status.equals('shipping')}">
                             <select name="status" id="">
                                 <option value="shipping">shipping</option>
                                 <option value="done">done</option>
                             </select>
                         </c:if>
                     </td>
-
                     <td><c:if test="${order.status=='done'}">
                         <c:out value="${order.orderDate}"></c:out>
                     </c:if></td>

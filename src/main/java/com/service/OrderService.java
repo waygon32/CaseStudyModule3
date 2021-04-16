@@ -14,7 +14,7 @@ import java.util.List;
 public class OrderService {
     private static String SELECT_FROM_ORDER_DETAIL_VIEW_BY_ACCOUNT = "SELECT * FROM vw_orderdetail WHERE account =? and orderID=?  order by status desc";
     private static String SELECT_FROM_ORDER_HISTORY = "SELECT * FROM vw_orderdetail WHERE account =? and  status='done' ";
-    private static String SELECT_FROM_ORDER_DETAIL_VIEW = "SELECT orderID, account , sum(prices) AS total , status,orderDate FROM vw_orderDetail  group by orderID  order by status desc;";
+    private static String SELECT_FROM_ORDER_DETAIL_VIEW = "SELECT orderID, account , sum(prices) AS total , status, orderDate FROM vw_orderDetail  group by orderID  order by status desc;";
     private static String INSERT_ORDER_DETAIL = "INSERT INTO ordersdetail (orderId,productId,qualtityOrder)  values (?,?,?) ";
     private static String INSERT_ORDER = "INSERT INTO orders (orderId,account) values (?,?) ";
     private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET qualtity =? WHERE productId=? ";
@@ -62,7 +62,7 @@ public class OrderService {
     public void insertOrderDetailView(List<Product> listProduct, String account) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ORDER_DETAIL);
         PreparedStatement preparedStatement1 = connection.prepareStatement(INSERT_ORDER);
-        int orderID = (int) (Math.random() * 1000) * (int) (Math.random() * 5);
+        int orderID = (int) (Math.random() * 1000) * (int) ((Math.random() * 5)+1);
         preparedStatement1.setInt(1, orderID);
         preparedStatement1.setString(2, account);
         preparedStatement1.executeUpdate();
@@ -70,7 +70,7 @@ public class OrderService {
             preparedStatement.setInt(1, orderID);
             preparedStatement.setInt(2, product.getProductId());
             preparedStatement.setInt(3, product.getQuantity());
-//            preparedStatement.setInt(4, "wating");
+//            preparedStatement.setInt(4, "waiting");
             preparedStatement.executeUpdate();
         }
     }
@@ -81,18 +81,6 @@ public class OrderService {
         List<Order> orderList = new ArrayList<>();
 
         while (resultSet.next()) {
-//            Integer orderId = resultSet.getInt("orderId");
-//            String account = resultSet.getString("account");
-//            String name = resultSet.getString("typeName");
-//            int productId = resultSet.getInt("productId");
-//            int quantity = resultSet.getInt("quantity");
-//            String color = resultSet.getString("color");
-//            int memory = resultSet.getInt("memory");
-//            String price = resultSet.getString("price");
-//            for (Order order : orderList) {
-//                if (order.getCustomer().getAccount().equals(account) && orderId.equals(order.getOrderID())) {
-//                    isExist = true;
-//                }
             String account = resultSet.getString("account");
             int orderId = resultSet.getInt("orderId");
             String total = resultSet.getString("total");

@@ -172,7 +172,7 @@
             out.println(
                     "        <div class=\"col-lg-2 col-6 btn btn-outline-success\" style=\"margin: auto; text-align: center\">\n" +
                             "        <a style=\"margin-left: auto; margin-top: 10px; margin-bottom: 10px\"\n" +
-                            "           onclick=\"window.location.href='/customer?action=buy'\" method=\"post\">Buy now</a>\n" +
+                            "           onclick=\"window.location.href='/product?action=buy'\" >Buy now</a>\n" +
                             "    </div>");
         };
     %>

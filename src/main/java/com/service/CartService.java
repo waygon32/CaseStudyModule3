@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartService {
-    private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?";
+    private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM vw_productDetail WHERE productId=?  ";
     private static String INSERT_INTO_CART = "INSERT INTO cart(productId, quantity, account,cartPrice) values(?,?,?,?) ";
     private static String GET_PRODUCT_LIST_CART = "SELECT * FROM vw_cartdetail WHERE account=?";
     private static String UPDATE_CART_BY_ID = "UPDATE cart SET quantity=? ,cartPrice=? WHERE productId=?";

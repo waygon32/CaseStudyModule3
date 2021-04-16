@@ -27,22 +27,19 @@ public class CustomerServlet extends HttpServlet {
         }
         System.out.println("action" + action);
         switch (action) {
-            case "loginForm": {
+            case "loginForm":
                 showLoginForm(request, response);
                 break;
-            }
-            case "signUpForm": {
+            case "signUpForm":
                 showSignUpForm(request, response);
                 break;
-            }
-            case "logOut": {
+
+            case "logOut":
                 logOut(request, response);
                 break;
-            }
-            case "showMain": {
+            case "showMain":
                 showMain(request, response);
                 break;
-            }
             case "customerInformation":
                 showCustomerInfor(request, response);
                 break;

@@ -11,6 +11,16 @@ public class Order {
     private Cart cart;
     private String status;
     private String orderDate;
+    private String receivedTime;
+
+    public String getReceivedTime() {
+        return receivedTime;
+    }
+
+    public void setReceivedTime(String receivedTime) {
+        this.receivedTime = receivedTime;
+    }
+
     public String getOrderDate() {
         return orderDate;
     }
@@ -20,7 +30,6 @@ public class Order {
     }
 
 
-
     public String getStatus() {
         return status;
     }
@@ -28,8 +37,6 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
 
 
 //    public Order(int orderID, Customer customer, Cart cart) {
@@ -46,12 +53,13 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Order(int orderId, String account, String total, String status, String orderDate) {
-        this.orderId= orderId;
+    public Order(int orderId, String account, String total, String status, String orderDate, String receivedTime) {
+        this.orderId = orderId;
         this.account = account;
         this.totalPrices = total;
-        this.status=status;
+        this.status = status;
         this.orderDate = orderDate;
+        this.receivedTime = receivedTime;
 
     }
 

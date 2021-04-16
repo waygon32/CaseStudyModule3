@@ -177,7 +177,6 @@
 </div>
 <div class="row" style="margin-left: 60px">
     <h1 align="center">Product Manager</h1>
-    <a href="/Admin/MainManager.jsp">Back</a>
     <table>
         <tr>
             <td>ProductID</td>
@@ -206,6 +205,7 @@
         </c:forEach>
     </table>
     <a href="/product?action=create" style="text-align: center"> Add</a>
+    <a href="/Admin/MainManager.jsp">Back</a>
 </div>
 </div>
 <!--end context-->

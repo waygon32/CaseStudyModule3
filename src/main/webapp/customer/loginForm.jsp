@@ -26,16 +26,16 @@
     <title>Login</title>
 </head>
 <body>
+<div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
+    <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
+       onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
+</div>
 <div id="logreg-forms">
-    <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
-        <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-           onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
-    </div>
     <form class="form-signin" action="/customer?action=loginForm" method="post">
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
         <p>${message}</p>
         <input type="text" name="account" id="inputEmail" class="form-control" placeholder="UserName" required="" autofocus="">
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
         <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
         <hr>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/customer?action=signUpForm'" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>

@@ -180,6 +180,7 @@
             </tr>
         </c:forEach>
     </table>
+    <a href="/Admin/MainManager.jsp">Back</a>
 </div>
 </div>
 <!--end context-->

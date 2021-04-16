@@ -16,8 +16,8 @@ import java.util.List;
 @WebServlet(name = "CustomerServlet", value = "/customer")
 public class CustomerServlet extends HttpServlet {
     static ProductImp productImp = new ProductImp();
-    CustomerService customerService =  new CustomerService();
-    OrderService  orderService  = new OrderService();
+    CustomerService customerService = new CustomerService();
+    OrderService orderService = new OrderService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class CustomerServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-        System.out.println("action"+action);
+        System.out.println("action" + action);
         switch (action) {
             case "loginForm": {
                 showLoginForm(request, response);
@@ -44,10 +44,10 @@ public class CustomerServlet extends HttpServlet {
                 break;
             }
             case "customerInformation":
-                showCustomerInfor(request,response);
+                showCustomerInfor(request, response);
                 break;
             case "orderDetail":
-                showOrderDetailByOrderId(request,response);
+                showOrderDetailByOrderId(request, response);
                 break;
 
             default: {
@@ -58,17 +58,17 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void showOrderDetailByOrderId(HttpServletRequest request, HttpServletResponse response) {
-        String account =  request.getParameter("account");
-        int orderId  =  Integer.parseInt(request.getParameter("orderId"));
+        String account = request.getParameter("account");
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
         try {
-            List<Product> productList = orderService.getProductListInOrder(account,orderId);
-            request.setAttribute("listOrder",productList);
-            request.setAttribute("orderId",orderId);
-            request.setAttribute("account",account);
-            RequestDispatcher  dispatcher  =  request.getRequestDispatcher("/customer/orderDetail.jsp");
+            List<Product> productList = orderService.getProductListInOrder(account, orderId);
+            request.setAttribute("listOrder", productList);
+            request.setAttribute("orderId", orderId);
+            request.setAttribute("account", account);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/orderDetail.jsp");
             try {
-                dispatcher.forward(request,response);
-            } catch (ServletException |IOException  e) {
+                dispatcher.forward(request, response);
+            } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
         } catch (SQLException e) {
@@ -85,17 +85,17 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        request.setAttribute("listOldOrder",listOldOrder);
-        request.setAttribute("customer",customerService.getCustomerByAccount(account));
-        RequestDispatcher  requestDispatcher = request.getRequestDispatcher("customer/customerInformation.jsp");
-        requestDispatcher.forward(request,response);
+        request.setAttribute("listOldOrder", listOldOrder);
+        request.setAttribute("customer", customerService.getCustomerByAccount(account));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/customerInformation.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.removeAttribute("acc");
         session.invalidate();
-        showMain(request,response);
+        showMain(request, response);
     }
 
     private void showSignUpForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -138,33 +138,45 @@ public class CustomerServlet extends HttpServlet {
     private void signUp(HttpServletRequest request, HttpServletResponse response) {
         String account = request.getParameter("account");
         String password = request.getParameter("password");
+        String rePassword = request.getParameter("rePassword");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String phoneNumber = request.getParameter("phoneNumber");
-        CustomerService customerService = new CustomerService();
-        boolean check = customerService.checkAccount(account);
-        if (check) {
-            customerService.addCustomer(account, password, name, address, phoneNumber);
-            HttpSession session = request.getSession();
-            Customer customer = customerService.checkLogin(account, password);
-            session.setAttribute("acc", customer);
-            String message = customer.getAccount();
-            request.setAttribute("message1", message);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
-            try {
-                dispatcher.forward(request, response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (password == rePassword) {
+            CustomerService customerService = new CustomerService();
+            boolean check = customerService.checkAccount(account);
+            if (check) {
+                customerService.addCustomer(account, password, name, address, phoneNumber);
+                HttpSession session = request.getSession();
+                Customer customer = customerService.checkLogin(account, password);
+                session.setAttribute("acc", customer);
+                String message = customer.getAccount();
+                request.setAttribute("message1", message);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
+                try {
+                    dispatcher.forward(request, response);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                String message = "T&#224;i kho&#7843;n &#273;&#227; t&#7891;n t&#7841;i";
+                request.setAttribute("message", message);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("customer/signUpForm.jsp");
+                try {
+                    dispatcher.forward(request, response);
+                } catch (ServletException |IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
+        }else {
+            String message = "nh&#7853;p l&#7841;i password kh&#244;ng kh&#7899;p";
+            request.setAttribute("message", message);
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/signUpForm.jsp");
             try {
                 dispatcher.forward(request, response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ServletException |IOException e) {
                 e.printStackTrace();
             }
         }
@@ -179,7 +191,7 @@ public class CustomerServlet extends HttpServlet {
             if (!customer.getAccount().equals("admin")) {
                 HttpSession session = request.getSession();
                 session.setAttribute("acc", customer);
-                showMain(request,response);
+                showMain(request, response);
 //            response.sendRedirect("customer/main.jsp");
             } else {
                 HttpSession session = request.getSession();

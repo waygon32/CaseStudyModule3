@@ -63,6 +63,16 @@ public class Product {
         this.describeProduct = describe;
         this.price = price;
         this.productId = id;
+
+    }
+    public Product(int id, String productName, String color, int memory, String describe, String price,String img) {
+        this.name = productName;
+        this.color = color;
+        this.memory = memory;
+        this.describeProduct = describe;
+        this.price = price;
+        this.productId = id;
+        this.img= img;
     }
     public Product(String color, int memory, String price, String describeProduct, String img, String name) {
         this.color = color;

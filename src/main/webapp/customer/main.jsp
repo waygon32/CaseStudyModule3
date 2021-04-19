@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                 <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                   onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
+                   onclick="window.location.href='/customer?action=showMain'" method="post">Home</a>
             </div>
             <div class="col-lg-6 col-12">
                 <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
@@ -76,7 +76,7 @@
             <c:if test="${sessionScope.acc ==null}">
                 <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                       onclick="window.location.href='/customer?action=loginForm'" method="post">Đăng nhập</a>
+                       onclick="window.location.href='/customer?action=loginForm'" method="post">Log In</a>
                 </div>
             </c:if>
             <c:if test="${sessionScope.acc !=null}">
@@ -96,7 +96,7 @@
                 </c:if>
                 <div class="col-lg-1 col-3 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-rigt: auto; margin-top: 10px; margin-bottom: 10px"
-                       onclick="window.location.href='/customer?action=logOut'">Đăng xuất</a>
+                       onclick="window.location.href='/customer?action=logOut'">Log Out</a>
                 </div>
             </c:if>
         </div>
@@ -165,7 +165,7 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div>
-                            <img src="https://cdn.tgdd.vn/Products/Images/42/228736/iphone-12-trang-new-600x600-600x600.jpg"
+                            <img src="<c:out value="${product.img}"></c:out>"
                                  class="d-block w-100" alt="...">
                         </div>
                         <div>
@@ -173,12 +173,12 @@
 <%--                                <h3><c:out value="${product.productId}"></c:out></h3>--%>
                                 <h3><c:out value="${product.name}"></c:out> <c:out
                                         value="${product.color}"></c:out></h3>
-                                <h5>Bộ nhớ: <c:out value="${product.memory}"></c:out>GB</h5>
+                                <h5>Memory: <c:out value="${product.memory}"></c:out>GB</h5>
                                 <h5><c:out value="${product.describeProduct}"></c:out></h5>
                             </div>
                             <div style="margin: auto">
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
-                                    <h3 style="margin: auto">Giá: <c:out value="${product.price}"></c:out></h3>
+                                    <h3 style="margin: auto">Price: <c:out value="${product.price}"></c:out></h3>
                                 </div>
                                 <div class="font-weight-bold blue-text" style="text-align: center; color: red">
                                     <a href="/product?action=addToCart&id=${product.productId} ">Add to Cart</a>

@@ -15,7 +15,7 @@ public class ProductImp implements IProduct {
     public static final String GET_PRODUCT_BY_ID = "SELECT * from productdetail WHERE productId = ?";
     public static final String DELETE_PRODUCT = "DELETE FROM productdetail WHERE productId=?";
     public static final String UPDATE_PRODUCT = "UPDATE productdetail SET typeID=? ,color=?,memory=?,price=?,quantity=?,describeProduct=?,img=? WHERE productID=?";
-    public static final String LIST_PRODUCT_FOR_CUSTOMER = "select  typeName, color,memory,describeProduct , price,productID from producttype  inner join productdetail on productdetail.typeId=  producttype.typeId order by  typename asc";
+    public static final String LIST_PRODUCT_FOR_CUSTOMER = "select  typeName, color,memory,describeProduct , price,productID, img from producttype  inner join productdetail on productdetail.typeId=  producttype.typeId order by  typename asc";
 
     Connection connection = DataBaseConnection.getConnection();
 
@@ -116,7 +116,8 @@ public class ProductImp implements IProduct {
                 String describe = resultSet.getString("describeProduct");
                 String price = resultSet.getString("price");
                 int id = resultSet.getInt("productId");
-                productList.add(new Product(id, productName, color, memory, describe, price));
+                String img = resultSet.getString("img");
+                productList.add(new Product(id, productName, color, memory, describe, price,img));
             }
             return productList;
         } catch (SQLException e) {

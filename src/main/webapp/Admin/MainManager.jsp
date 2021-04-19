@@ -106,16 +106,16 @@
                 <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
                    onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
             </div>
-            <div class="col-lg-6 col-12">
-                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                      action="product?action=searchMenu" method="post">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                           name="search">
-                    <button class="btn btn-outline-success" type="submit"
-                            style=" background: aliceblue;margin-right: 10px; color: black">Search
-                    </button>
-                </form>
-            </div>
+<%--            <div class="col-lg-6 col-12">--%>
+<%--                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"--%>
+<%--                      action="product?action=searchMenu" method="post">--%>
+<%--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"--%>
+<%--                           name="search">--%>
+<%--                    <button class="btn btn-outline-success" type="submit"--%>
+<%--                            style=" background: aliceblue;margin-right: 10px; color: black">Search--%>
+<%--                    </button>--%>
+<%--                </form>--%>
+<%--            </div>--%>
             <c:if test="${sessionScope.acc ==null}">
                 <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
@@ -175,18 +175,18 @@
         <td></td>
     </tr>
     <tr>
-        <td>Quản lý sản phẩm</td>
-        <td>Thao tác thêm , sửa , xóa sản phẩm hệ thống</td>
+        <td>Product Management</td>
+        <td>Add,edit,delete product</td>
         <td><a href="/product">Go</a></td>
     </tr>
     <tr>
-        <td>Quản lý đơn hàng</td>
-        <td>Quản lí thông tin đơn hàng , trạng thái đơn hàng , thông tin về khách hàng , sản phẩm</td>
+        <td>Order Management</td>
+        <td>Order information, Order Status </td>
         <td><a href="/product?action=orderManagement">Go</a></td>
     </tr>
     <tr>
-        <td>Thống kê</td>
-        <td>Thống kê tổng doanh thu, top 5 sản phẩm bán chạy nhất</td>
+        <td>Statistic</td>
+        <td>Top5 product selled</td>
         <td><a href="/product?action=statistics">Go</a></td>
     </tr>
 </table>

@@ -107,7 +107,6 @@ public class CustomerServlet extends HttpServlet {
     }
 
     public void showMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Call Home");
         request.setAttribute("productsList", productImp.getListProductForClien());
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/main.jsp");
         dispatcher.forward(request, response);

@@ -157,7 +157,6 @@ public class Servlet extends HttpServlet {
         } else {
             customerServlet.showLoginForm(request, response);
         }
-//        có, cần đặt k? xem xét sau
     }
 
 
@@ -226,7 +225,6 @@ public class Servlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    //một cái gì đấy mà thế anh làm ra
     private void showIphoneID1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String textSearch = request.getParameter("cid");
         List<Product> list = productImp.searchProduct(textSearch);

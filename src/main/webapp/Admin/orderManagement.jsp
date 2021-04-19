@@ -88,16 +88,16 @@
                 <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
                    onclick="window.location.href='/customer?action=showMain'" method="post">Trang chủ</a>
             </div>
-            <div class="col-lg-6 col-12">
-                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-                      action="product?action=searchMenu" method="post">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                           name="search">
-                    <button class="btn btn-outline-success" type="submit"
-                            style=" background: aliceblue;margin-right: 10px; color: black">Search
-                    </button>
-                </form>
-            </div>
+<%--            <div class="col-lg-6 col-12">--%>
+<%--                <form class="d-flex col-sm-4" style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"--%>
+<%--                      action="product?action=searchMenu" method="post">--%>
+<%--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"--%>
+<%--                           name="search">--%>
+<%--                    <button class="btn btn-outline-success" type="submit"--%>
+<%--                            style=" background: aliceblue;margin-right: 10px; color: black">Search--%>
+<%--                    </button>--%>
+<%--                </form>--%>
+<%--            </div>--%>
             <c:if test="${sessionScope.acc ==null}">
                 <div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
                     <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
@@ -148,7 +148,7 @@
 <div class="row" style="margin-left: 60px">
     <table align="center">
         <tr>
-            <td colspan="6"><h1>Quản lý thông tin đơn hàng</h1></td>
+            <td colspan="6"><h1>Oder Management</h1></td>
         </tr>
         <tr>
             <td>Order ID</td>
@@ -159,7 +159,6 @@
             <td>Received Time</td>
             <td>Action</td>
         </tr>
-        customer
         <c:forEach var="order" items="${requestScope['orderList']}">
             <form action="/product?action=confirmOrder&orderId=${order.orderId}&account=${order.account}" method="post">
                 <tr>
@@ -196,7 +195,7 @@
                     </c:if></td>
 
 
-                    <td><c:if test="${order.status!='done'}"><input type="submit" value="Confirm"></c:if></td>
+                    <td><c:if test="${order.status!='done'}"><input type="submit" value="Confirm" onclick="return confirm('Confirm')"></c:if></td>
             </form>
             </tr>
         </c:forEach>

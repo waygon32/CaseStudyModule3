@@ -17,7 +17,7 @@ public class OrderService {
     private static String SELECT_FROM_ORDER_DETAIL_VIEW = "SELECT orderID, account , sum(prices) AS total , status,orderDate,receivedTime FROM vw_orderDetail  group by orderID  order by status desc;";
     private static String INSERT_ORDER_DETAIL = "INSERT INTO ordersdetail (orderId,productId,qualtityOrder)  values (?,?,?) ";
     private static String INSERT_ORDER = "INSERT INTO orders (orderId,account) values (?,?) ";
-    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET qualtity =? WHERE productId=? ";
+    private static String UPDATE_LIST_WHEN_BOUGHT = "UPDATE productDetail SET quantity =? WHERE productId=? ";
     private static String UPDATE_STATUS_IN_ORDER = "UPDATE ordersdetail SET status=? WHERE orderId=?";
     private static String UPDATE_RECEIVED_TIME = "UPDATE ordersDetail SET receivedTime =(now()) WHERE orderId = ? ";
     private static String UPDATE_ORDER_DATE = "UPDATE orders SET orderDate=(now()) WHERE orderID=?";
